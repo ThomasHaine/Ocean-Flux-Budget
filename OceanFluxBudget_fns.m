@@ -34,28 +34,6 @@
 %     return out
 % end
 % 
-% function DefineSpeed(DataParams,straitParams)
-%     speeds = ar1(DataParams["N"], DataParams["c"], DataParams["ϕ"], ustrip(straitParams["speed_std"])) .* 1u"m/s"
-%     speeds = speeds .- mean(speeds) .+ straitParams["speed_mean"]
-%     out = Dict("value" => speeds, "long name" => "normal speed", "symbol" => "u")
-%     return out
-% end
-% 
-% function DefineTemperature(DataParams,straitParams)
-%     temps = ar1(DataParams["N"], DataParams["c"], DataParams["ϕ"], ustrip(straitParams["temp_std"])) .* 1u"K"
-%     temps = temps .- mean(temps) .+ straitParams["temp_mean"]
-%     temps = max.(temps,271.35*1u"K")
-%     out = Dict("value" => temps, "long name" => "conservative temperature", "symbol" => "Θ")
-%     return out
-% end
-% 
-% function DefineSalinity(DataParams,straitParams)
-%     salts = ar1(DataParams["N"], DataParams["c"], DataParams["ϕ"], ustrip(straitParams["salinity_std"])) .* 1u"g/kg"
-%     salts = salts .- mean(salts) .+ straitParams["salinity_mean"]
-%     salts = max.(salts,0.0*1u"g/kg")
-%     out = Dict("value" => salts, "long name" => "absolute salinity", "symbol" => "S_A")
-%     return out
-% end
 % 
 % 
 % function ComputeFluxes(strait, FluxParams)

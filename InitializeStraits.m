@@ -67,8 +67,8 @@ end
 function tmp = DefineDataParameters(N)
 % Define data parameters.
 tmp.N     = N ;     % Number of entries in the timeseries
-tmp.c     = 0.9 ;   % Nu
-tmp.phi   = 0.8 ;
+tmp.c     = 0.9 ;   % Constant    parameter in AR(1) process
+tmp.phi   = 0.8 ;   % Persistence parameter in AR(1) process
 tmp.p_ref = 0.0 ;   % Reference pressure [N/m^2]
 end
 
@@ -80,17 +80,10 @@ end
 
 function strait = DefineStrait(DataParams,straitParams,name)
 % times are at mid points and of duration timePeriods
-N                = DataParams.N ;
-% timePeriods      = fill(year(1), N) ;
-% timeEdges        = DateTime(1990) + [Year(0); cumsum(timePeriods)] ;
-% timePeriods      = diff(timeEdges) ;
-% timeMidpoints    = fill(DateTime(2022, 12, 30, 14, 32, 0), N) ;
-% timeMidpoints(1) = timeEdges(1) + timePeriods(1) / 2 ;
-% for tt = 2:N
-%     timeMidpoints(tt) = timeEdges(1) + sum(timePeriods(1:tt-1)) + timePeriods(tt) / 2 ;
-% end % tt
-timePeriods         = DataParams.N.*ones
-timeMidPoints       = datetime(1990:1990+DataParams.N,1,15) ;
+
+timeEdges           = datetime(1990:1990+DataParams.N+1,1,1) ;
+timePeriods         = diff(timeEdges) ;
+timeMidpoints       = timeEdges(1) + timePeriods./2 ;
 
 strait.name         = name ;
 strait.normal_speed = DefineSpeed(DataParams,straitParams) ;
@@ -101,4 +94,42 @@ strait.time_periods = timePeriods ;
 strait.parameters   = straitParams ;
 strait.density      = ComputeDensity(DataParams,strait) ;
 
+end
+
+function out = DefineSpeed(DataParams,straitParams)
+    speeds        = ar1(DataParams.N,DataParams.c,DataParams.phi,straitParams.speed_std) ;
+    speeds        = speeds - mean(speeds) + straitParams.speed_mean ;
+    out.value     = speeds ;
+    out.long_name = "normal speed" ;
+    out.symbol    = "u" ;
+end
+
+function out = DefineTemperature(DataParams,straitParams)
+    temps         = ar1(DataParams.N,DataParams.c,DataParams.phi,straitParams.temp_std) ;
+    temps         = temps - mean(temps) + straitParams.temp_mean ;
+    temps         = max(temps,-1.9) ;      % Clip temperatures so they're above freezing.
+    out.value     = temps ;
+    out.long_name = "conservative temperature" ;
+    out.symbol    = "$\Theta$" ;
+end
+
+function out = DefineSalinity(DataParams,straitParams)
+    salts         = ar1(DataParams.N,DataParams.c,DataParams.phi,straitParams.salinity_std) ;
+    salts         = salts - mean(salts) + straitParams.salinity_mean ;
+    salts         = max(salts,0.0) ;              % Clip salinities so they're positive
+    out.value     = salts ;
+    out.long_name = "absolute salinity" ;
+    out.symbol    = "$S_A$" ;
+end
+
+function v = ar1(N,c,phi,std)
+% AR(1) process.
+    x = 0 ;         % Starting value
+    if(N > 0)
+        v(1) = x ;
+        for ii=2:N
+            x = c + x * phi + randn(1) * std ;
+            v(ii) = x ;
+        end % ii
+    end % if
 end
