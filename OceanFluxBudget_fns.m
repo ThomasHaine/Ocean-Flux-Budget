@@ -22,18 +22,6 @@
 % const sverdrupinmcubedpersecond = 1.0e6
 % const kging = 1.0e3
 % 
-function tmp = DefineDataParameters(N)
-% Define data parameters.
-tmp.N     = N ;     % Number of ??
-tmp.c     = 0.9 ;   % Nu
-tmp.phi   = 0.8 ;
-tmp.p_ref = 0.0 ;   % Reference pressure [N/m^2]
-end
-
-% function DefineFluxParameters()
-%     tmp = Dict("T_ref" => 273.15u"K", "S_ref" => 34.8u"g/kg", "C_p" => 3991.86795711963u"J/kg/K")
-%     return tmp
-% end
 % 
 % function ComputeDensity(DataParams,strait)
 %     N = length(strait["salinity"]["value"])
@@ -47,14 +35,14 @@ end
 % end
 % 
 % function DefineSpeed(DataParams,straitParams)
-%     speeds = ar1(DataParams["N"], DataParams["c"], DataParams["ϕ"], ustrip(straitParams["speed_σ"])) .* 1u"m/s"
+%     speeds = ar1(DataParams["N"], DataParams["c"], DataParams["ϕ"], ustrip(straitParams["speed_std"])) .* 1u"m/s"
 %     speeds = speeds .- mean(speeds) .+ straitParams["speed_mean"]
 %     out = Dict("value" => speeds, "long name" => "normal speed", "symbol" => "u")
 %     return out
 % end
 % 
 % function DefineTemperature(DataParams,straitParams)
-%     temps = ar1(DataParams["N"], DataParams["c"], DataParams["ϕ"], ustrip(straitParams["temp_σ"])) .* 1u"K"
+%     temps = ar1(DataParams["N"], DataParams["c"], DataParams["ϕ"], ustrip(straitParams["temp_std"])) .* 1u"K"
 %     temps = temps .- mean(temps) .+ straitParams["temp_mean"]
 %     temps = max.(temps,271.35*1u"K")
 %     out = Dict("value" => temps, "long name" => "conservative temperature", "symbol" => "Θ")
@@ -62,36 +50,13 @@ end
 % end
 % 
 % function DefineSalinity(DataParams,straitParams)
-%     salts = ar1(DataParams["N"], DataParams["c"], DataParams["ϕ"], ustrip(straitParams["salinity_σ"])) .* 1u"g/kg"
+%     salts = ar1(DataParams["N"], DataParams["c"], DataParams["ϕ"], ustrip(straitParams["salinity_std"])) .* 1u"g/kg"
 %     salts = salts .- mean(salts) .+ straitParams["salinity_mean"]
 %     salts = max.(salts,0.0*1u"g/kg")
 %     out = Dict("value" => salts, "long name" => "absolute salinity", "symbol" => "S_A")
 %     return out
 % end
 % 
-% function DefineStrait(DataParams,straitParams,name)
-%     # times are at mid points and of duration timePeriods
-%     N = DataParams["N"]
-%     timePeriods = fill(Year(1), N)
-%     timeEdges = DateTime(1990) .+ [Year(0); cumsum(timePeriods)]
-%     timePeriods = diff(timeEdges)
-%     timeMidpoints = fill(DateTime(2022, 12, 30, 14, 32, 0), N)
-%     timeMidpoints[1] = timeEdges[1] + timePeriods[1] / 2
-%     for tt = 2:N
-%         timeMidpoints[tt] = timeEdges[1] + sum(timePeriods[1:tt-1]) + timePeriods[tt] / 2
-%     end # tt
-% 
-%     local strait = Dict(
-%         "name" => name,
-%         "normal speed" => DefineSpeed(DataParams,straitParams),
-%         "temperature" => DefineTemperature(DataParams,straitParams),
-%         "salinity" => DefineSalinity(DataParams,straitParams),
-%         "time" => timeMidpoints,
-%         "time periods" => timePeriods,
-%         "parameters" => straitParams)
-%     strait["density"] = ComputeDensity(DataParams,strait)
-%     return strait
-% end
 % 
 % function ComputeFluxes(strait, FluxParams)
 %     vol_flux = Dict(
@@ -172,70 +137,7 @@ end
 %     return straits
 % end
 % 
-% function InitializeStraits(balanceFlag::Bool)
-%     local DataParams = DefineDataParameters(32)
-%     local FluxParams = DefineFluxParameters()
-% 
-%     # Define cross-sectional area of each strait here. See Tsubouchi et al. (2018) Fig 1 for these rough estimates
-%     # Also define statistical properties of timeseries for each strait. See Tsubouchi et al. (2018) Table 3 and Figs. 2 and 4.
-% 
-%     # Fram Strait
-%     straitParams = Dict(
-%         "speed_σ" => 0.0004u"m/s", "speed_Delta" => 0.0u"m/s", "speed_mean" => -0.0037u"m/s",
-%         "temp_σ" => 0.2u"K", "temp_Delta" => 0.0u"K", "temp_mean" => 274.0u"K",
-%         "salinity_σ" => 0.1u"g/kg", "salinity_Delta" => 0.0u"g/kg", "salinity_mean" => 34.0u"g/kg",
-%         "area" => 3e8u"m^2")
-%     FramStrait = DefineStrait(DataParams,straitParams,"Fram Strait")
-% 
-%     # Davis Strait
-%     straitParams = Dict(
-%         "speed_σ" => 0.0002u"m/s", "speed_Delta" => 0.0u"m/s", "speed_mean" => -0.01u"m/s",
-%         "temp_σ" => 1u"K", "temp_Delta" => 0.0u"K", "temp_mean" => 273.15u"K",
-%         "salinity_σ" => 1u"g/kg", "salinity_Delta" => 0.0u"g/kg", "salinity_mean" => 33.0u"g/kg",
-%         "area" => 2e8u"m^2")
-%     DavisStrait = DefineStrait(DataParams,straitParams,"Davis Strait")
-% 
-%     # Bering Strait
-%     straitParams = Dict(
-%         "speed_σ" => 0.018u"m/s", "speed_Delta" => 0.0u"m/s", "speed_mean" => 0.18u"m/s",
-%         "temp_σ" => 2u"K", "temp_Delta" => 0.0u"K", "temp_mean" => 273.15u"K",
-%         "salinity_σ" => 0.5u"g/kg", "salinity_Delta" => 0.0u"g/kg", "salinity_mean" => 32.0u"g/kg",
-%         "area" => 3.8e6u"m^2")
-%     BeringStrait = DefineStrait(DataParams,straitParams,"Bering Strait")
-% 
-%     # BSO
-%     straitParams = Dict(
-%         "speed_σ" => 0.0005u"m/s", "speed_Delta" => 0.0u"m/s", "speed_mean" => 0.0096u"m/s",
-%         "temp_σ" => 1u"K", "temp_Delta" => 0.0u"K", "temp_mean" => 277.0u"K",
-%         "salinity_σ" => 0.2u"g/kg", "salinity_Delta" => 0.0u"g/kg", "salinity_mean" => 34.8u"g/kg",
-%         "area" => 2.4e8u"m^2")
-%     BSO = DefineStrait(DataParams,straitParams,"BSO")
-% 
-%     # R+P-E
-%     # Assumes a mean speed of 0.6m/s and a total flux of 6000km^3/yr from H et al. (2015) Table 1.
-%     straitParams = Dict(
-%         "speed_σ" => 0.05u"m/s", "speed_Delta" => 0.0u"m/s", "speed_mean" => 0.6u"m/s",
-%         "temp_σ" => 0.2u"K", "temp_Delta" => 0.0u"K", "temp_mean" => 273.15u"K",
-%         "salinity_σ" => 0.1u"g/kg", "salinity_Delta" => 0.0u"g/kg", "salinity_mean" => 0.0u"g/kg",
-%         "area" => 3.2e5u"m^2")
-%     PmEmR = DefineStrait(DataParams,straitParams,"Runoff + precipitation - evapouration")
-% 
-%     straits = Dict(
-%         "Fram Strait" => FramStrait,
-%         "Davis Strait" => DavisStrait,
-%         # "Bering Strait" => BeringStrait,
-%         # "BSO" => BSO,
-%         # "Runoff + precipitation - evapouration" => PmEmR
-%     )
-% 
-%     local straits = UpdateStraits(FluxParams, straits)
-%     if (balanceFlag)
-%         straits = BalanceMass(straits)
-%         straits = UpdateStraits(FluxParams, straits)
-%     end
-% 
-%     return straits, DataParams, FluxParams
-% end
+
 % 
 % function UpdateStraits(FluxParams, straits)
 % 

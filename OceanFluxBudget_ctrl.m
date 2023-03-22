@@ -1,22 +1,7 @@
-% # Run from REPL with include("Dash_test.jl") then run_server(app, "0.0.0.0", debug=true) then browse to http://0.0.0.0:8050/
-% # This version is a cut down test version with some functionality commented out. 
-% # I consistently hit a NaN not allowed to be written in JSON spec error, which I could never track down.
-% # Switched back to MATLAB...
-% 
-% using Dash
-% using DashBootstrapComponents
-% using PlotlyJS
-% using JSON
-% using Unitful
-% 
-% using Infiltrator
-% using BenchmarkTools
-% 
-% include("OceanFluxes.jl")
-% using .OceanFluxes
+
 % 
 % 
-% straits, DataParams, FluxParams = InitializeStraits(false)
+[straits, DataParams, FluxParams] = InitializeStraits(false) ;
 % straitName = collect(keys(straits))[1]
 % budgets = ComputeBudgets(straits)
 % 
