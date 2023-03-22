@@ -92,7 +92,7 @@ end
 function strait = DefineStrait(DataParams,straitParams,name)
 % times are at mid points and of duration timePeriods
 
-timeEdges           = datetime(1990:1990+DataParams.N+1,1,1) ;
+timeEdges           = datetime(1990:1990+DataParams.N,1,1) ;
 timePeriods         = diff(timeEdges) ;
 timeMidpoints       = timeEdges(1) + timePeriods./2 ;
 

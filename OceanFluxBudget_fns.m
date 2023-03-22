@@ -1,62 +1,11 @@
-% module OceanFluxes
+
+% export , , ComputeBudgets, PlotStraitsData, PlotStraitsFluxesBudgets
 % 
-% # Used Dict type for primary data structure, but should probably have used a mutable struct instead.
-% # See: https://stackoverflow.com/questions/56980348/julia-is-a-function-that-receives-a-dict-as-input-and-output-a-dict-type-stable
-% # 
-% 
-% export InitializeStraits, UpdateStraits, ComputeBudgets, PlotStraitsData, PlotStraitsFluxesBudgets
-% 
-% using PlotlyJS
-% using Statistics
-% using Unitful
-% @unit S_A "g/kg" absolute_salinity 1u"g/kg" true
-% include("AR1.jl")
-% using .AR1
-% using Dates
-% using GibbsSeaWater
-% using Infiltrator
-% using Printf
-% 
-% const yearinseconds = 86400.0*365.0
-% const kmcubedinmeterscubed = 1.0e9
-% const sverdrupinmcubedpersecond = 1.0e6
-% const kging = 1.0e3
-% 
-% 
-% 
+
 
 % 
 % 
 % 
-% function ComputeBudgets(straits)
-% 
-%     function accumulateBudget(straits, keyName)
-%         flag = true
-%         for strait in keys(straits)
-%             tmp = uconvert.(u"s", straits[strait]["time periods"]) .* straits[strait][keyName]["value"]
-%             if (flag || !@isdefined budget)
-%                 global budget = similar(tmp)
-%                 flag = false
-%             end
-%             if (!@isdefined times)
-%                 global times = straits[strait]["time"]
-%             end
-%             global budget .+= cumsum(tmp)
-%         end
-%         return budget
-%     end
-% 
-%     budgets = Dict(
-%         "time" => straits[first(keys(straits))]["time"],
-%         "mass" => accumulateBudget(straits, "mass flux"),
-%         "salt" => accumulateBudget(straits, "salt flux"),
-%         "volume" => accumulateBudget(straits, "volume flux"),
-%         "heat" => accumulateBudget(straits, "heat flux"),
-%         "LFC" => accumulateBudget(straits, "LFC flux"),
-%     )
-% 
-%     return budgets
-% end
 % 
  
  
