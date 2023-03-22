@@ -22,11 +22,14 @@
 % const sverdrupinmcubedpersecond = 1.0e6
 % const kging = 1.0e3
 % 
-% function DefineDataParameters(N::Int)
-%     tmp = Dict("N" => N, "c" => 0.9, "ϕ" => 0.8, "p_ref" => 0.0u"N/m^2")
-%     return tmp
-% end
-% 
+function tmp = DefineDataParameters(N)
+% Define data parameters.
+tmp.N     = N ;     % Number of ??
+tmp.c     = 0.9 ;   % Nu
+tmp.phi   = 0.8 ;
+tmp.p_ref = 0.0 ;   % Reference pressure [N/m^2]
+end
+
 % function DefineFluxParameters()
 %     tmp = Dict("T_ref" => 273.15u"K", "S_ref" => 34.8u"g/kg", "C_p" => 3991.86795711963u"J/kg/K")
 %     return tmp
