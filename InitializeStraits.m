@@ -7,19 +7,31 @@ FluxParams = DefineFluxParameters() ;
 % Also define statistical properties of timeseries for each strait. See Tsubouchi et al. (2018) Table 3 and Figs. 2 and 4.
 
 % Fram Strait
-straitParams = struct("speed_std",0.0004,"speed_Delta",0.0,"speed_mean",-0.0037, ...
-    "temp_std",0.2,"temp_Delta",0.0,"temp_mean",1.0, ...
-    "salinity_std",0.1,"salinity_Delta",0.0,"salinity_mean",34.0,"area",3e8) ;
+straitParams.speed_std      = 0.0004 ;      % Speed standard deviation [m/s]
+straitParams.speed_Delta    = 0.0 ;         % Speed change over timeseries [m/s]
+straitParams.speed_mean     = -0.0037 ;     % Speed average value [m/s]
+straitParams.temp_std       = 0.2 ;         % Temperature standard deviation [C]
+straitParams.temp_Delta     = 0.0 ;         % Temperature change over timeseries [C]
+straitParams.temp_mean      = 1.0 ;         % Temperature average value [C]
+straitParams.salinity_std   = 0.1 ;         % Salinity    standard deviation [g/kg]
+straitParams.salinity_Delta = 0.0 ;         % Salinity    change over timeseries [g/kg]
+straitParams.salinity_mean  = 34.0 ;        % Salinity    average value [g/kg]
+straitParams.area           = 3e8 ;         % Strait cross-sectional area [m^2]
 FramStrait = DefineStrait(DataParams,straitParams,"Fram Strait") ;
 
-% # Davis Strait
-% straitParams = Dict(
-%     "speed_std" => 0.0002u"m/s", "speed_Delta" => 0.0u"m/s", "speed_mean" => -0.01u"m/s",
-%     "temp_std" => 1u"K", "temp_Delta" => 0.0u"K", "temp_mean" => 273.15u"K",
-%     "salinity_std" => 1u"g/kg", "salinity_Delta" => 0.0u"g/kg", "salinity_mean" => 33.0u"g/kg",
-%     "area" => 2e8u"m^2")
-% DavisStrait = DefineStrait(DataParams,straitParams,"Davis Strait")
-%
+% Davis Strait
+straitParams.speed_std      = 0.0002 ;      % Speed standard deviation [m/s]
+straitParams.speed_Delta    = 0.0 ;         % Speed change over timeseries [m/s]
+straitParams.speed_mean     = -0.01 ;       % Speed average value [m/s]
+straitParams.temp_std       = 1.0 ;         % Temperature standard deviation [C]
+straitParams.temp_Delta     = 0.0 ;         % Temperature change over timeseries [C]
+straitParams.temp_mean      = 0.0 ;         % Temperature average value [C]
+straitParams.salinity_std   = 1.0 ;         % Salinity    standard deviation [g/kg]
+straitParams.salinity_Delta = 0.0 ;         % Salinity    change over timeseries [g/kg]
+straitParams.salinity_mean  = 33.0 ;        % Salinity    average value [g/kg]
+straitParams.area           = 2e8 ;         % Strait cross-sectional area [m^2]
+DavisStrait = DefineStrait(DataParams,straitParams,"Davis Strait") ;
+
 % # Bering Strait
 % straitParams = Dict(
 %     "speed_std" => 0.018u"m/s", "speed_Delta" => 0.0u"m/s", "speed_mean" => 0.18u"m/s",
@@ -45,18 +57,17 @@ FramStrait = DefineStrait(DataParams,straitParams,"Fram Strait") ;
 %     "area" => 3.2e5u"m^2")
 % PmEmR = DefineStrait(DataParams,straitParams,"Runoff + precipitation - evapouration")
 %
-straits = struct( ...
-    "Fram Strait",FramStrait, ...
-    "Davis Strait",DavisStrait) ;
+straits.FramStrait  = FramStrait ;
+straits.DavisStrait = DavisStrait ;
 % # "Bering Strait" => BeringStrait,
 % # "BSO" => BSO,
 % # "Runoff + precipitation - evapouration" => PmEmR
 
 
-% local straits = UpdateStraits(FluxParams, straits)
+straits = UpdateStraits(FluxParams, straits) ;
 if (balanceFlag)
-    %     straits = BalanceMass(straits)
-    %     straits = UpdateStraits(FluxParams, straits)
+    straits = BalanceMass(straits) ;
+    straits = UpdateStraits(FluxParams, straits) ;
 end % if
 
 end
@@ -96,40 +107,60 @@ strait.density      = ComputeDensity(DataParams,strait) ;
 
 end
 
-function out = DefineSpeed(DataParams,straitParams)
-    speeds        = ar1(DataParams.N,DataParams.c,DataParams.phi,straitParams.speed_std) ;
-    speeds        = speeds - mean(speeds) + straitParams.speed_mean ;
-    out.value     = speeds ;
-    out.long_name = "normal speed" ;
-    out.symbol    = "u" ;
+function speeds = DefineSpeed(DataParams,straitParams)
+speeds = ar1(DataParams.N,DataParams.c,DataParams.phi,straitParams.speed_std) ;
+speeds = speeds - mean(speeds) + straitParams.speed_mean ;
 end
 
-function out = DefineTemperature(DataParams,straitParams)
-    temps         = ar1(DataParams.N,DataParams.c,DataParams.phi,straitParams.temp_std) ;
-    temps         = temps - mean(temps) + straitParams.temp_mean ;
-    temps         = max(temps,-1.9) ;      % Clip temperatures so they're above freezing.
-    out.value     = temps ;
-    out.long_name = "conservative temperature" ;
-    out.symbol    = "$\Theta$" ;
+function temps = DefineTemperature(DataParams,straitParams)
+temps = ar1(DataParams.N,DataParams.c,DataParams.phi,straitParams.temp_std) ;
+temps = temps - mean(temps) + straitParams.temp_mean ;
+temps = max(temps,-1.9) ;      % Clip temperatures so they're above freezing.
 end
 
-function out = DefineSalinity(DataParams,straitParams)
-    salts         = ar1(DataParams.N,DataParams.c,DataParams.phi,straitParams.salinity_std) ;
-    salts         = salts - mean(salts) + straitParams.salinity_mean ;
-    salts         = max(salts,0.0) ;              % Clip salinities so they're positive
-    out.value     = salts ;
-    out.long_name = "absolute salinity" ;
-    out.symbol    = "$S_A$" ;
+function salts = DefineSalinity(DataParams,straitParams)
+salts = ar1(DataParams.N,DataParams.c,DataParams.phi,straitParams.salinity_std) ;
+salts = salts - mean(salts) + straitParams.salinity_mean ;
+salts = max(salts,0.0) ;              % Clip salinities so they're positive
 end
 
 function v = ar1(N,c,phi,std)
 % AR(1) process.
-    x = 0 ;         % Starting value
-    if(N > 0)
-        v(1) = x ;
-        for ii=2:N
-            x = c + x * phi + randn(1) * std ;
-            v(ii) = x ;
-        end % ii
-    end % if
+v = zeros(N,1) ;
+x = 0 ;         % Starting value
+if(N > 0)
+    v(1) = x ;
+    for ii=2:N
+        x = c + x * phi + randn(1) * std ;
+        v(ii) = x ;
+    end % ii
+end % if
+end
+
+function out = ComputeDensity(DataParams,strait)
+out = gsw_rho(strait.salinity, strait.temperature,DataParams.p_ref) ;
+end
+
+function straits = BalanceMass(straits)
+    fprintf(1,"balancing...") ;
+    massConverg = ComputeMassConverg(straits) ;
+    straitNames = fieldnames(straits) ;
+    for ss = 1:numel(straitNames)
+        strait = straitNames{ss} ;
+        straits.(strait).normal.speed = straits.(strait).normal.speed - (massConverg ./ numel(straitNames)) ./ (straits.(strait).density .* straits.(strait).parameters.area) ;
+    end % ss
+end
+
+function massConverg = ComputeMassConverg(straits)
+    flag = true ;
+    straitNames = fieldnames(straits) ;
+    for ss = 1:numel(straitNames)
+        strait = straitNames{ss} ;
+        tmp = straits.(strait).mass_flux ;
+        if (flag || exist(massConverg,'var'))
+            massConverg = similar(tmp) ;
+            flag = false ;
+        end % if
+        massConverg = massConverg + tmp ;
+    end % ss
 end

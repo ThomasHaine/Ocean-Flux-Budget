@@ -23,43 +23,10 @@
 % const kging = 1.0e3
 % 
 % 
-% function ComputeDensity(DataParams,strait)
-%     N = length(strait["salinity"]["value"])
-%     density = fill(0.0, N)
-%     for ii = 1:N
-%         density[ii] = gsw_rho(ustrip(strait["salinity"]["value"])[ii], ustrip(strait["temperature"]["value"])[ii] - 273.15, ustrip(DataParams["p_ref"]))
-%     end
-%     density = density .* 1u"kg/m^3"
-%     out = Dict("value" => density, "long name" => "seawater density", "symbol" => "ρ")
-%     return out
-% end
+% 
+
 % 
 % 
-% 
-% function ComputeFluxes(strait, FluxParams)
-%     vol_flux = Dict(
-%         "long name" => "volume flux",
-%         "value" => strait["parameters"]["area"] .* strait["normal speed"]["value"])
-%     mass_flux = Dict(
-%         "long name" => "mass flux",
-%         "value" => strait["density"]["value"] .* strait["parameters"]["area"] .* strait["normal speed"]["value"])
-%     heat_flux = Dict(
-%         "long name" => "heat flux",
-%         "value" => strait["density"]["value"] .* FluxParams["C_p"] .* strait["parameters"]["area"] .* strait["normal speed"]["value"] .* (strait["temperature"]["value"] .- FluxParams["T_ref"]))
-%     LFC_flux = Dict(
-%         "long name" => "liquid freshwater flux",
-%         "value" => strait["parameters"]["area"] .* strait["normal speed"]["value"] .* (strait["salinity"]["value"] .- FluxParams["S_ref"]) ./ FluxParams["S_ref"])
-%     salt_flux = Dict(
-%         "long name" => "salt flux",
-%         "value" => strait["density"]["value"] .* strait["parameters"]["area"] .* strait["normal speed"]["value"] .* strait["salinity"]["value"])
-%     fluxes = Dict(
-%         "volume flux" => vol_flux,
-%         "heat flux" => heat_flux,
-%         "LFC flux" => LFC_flux,
-%         "salt flux" => salt_flux,
-%         "mass flux" => mass_flux)
-%     return fluxes
-% end
 % 
 % function ComputeBudgets(straits)
 % 
@@ -91,40 +58,10 @@
 %     return budgets
 % end
 % 
-% function ComputeMassConverg(straits)
-%     flag = true
-%     straitNames = keys(straits)
-%     for strait in straitNames
-%         tmp = straits[strait]["mass flux"]["value"]
-%         if (flag || !@isdefined massConverg)
-%             global massConverg = similar(tmp)
-%             flag = false
-%         end
-%         global massConverg .+= tmp
-%     end
-%     return massConverg
-% end
-% 
-% function BalanceMass(straits)
-%     println("balancing...")
-%     massConverg = ComputeMassConverg(straits)
-%     straitNames = keys(straits)
-%     for strait in straitNames
-%         straits[strait]["normal speed"]["value"] .-= (massConverg ./ length(straitNames)) ./ (straits[strait]["density"]["value"] .* straits[strait]["parameters"]["area"])
-%     end
-%     return straits
-% end
-% 
+ 
+ 
 
 % 
-% function UpdateStraits(FluxParams, straits)
-% 
-%     for strait in keys(straits)
-%         straits[strait] = merge(straits[strait], ComputeFluxes(straits[strait], FluxParams))
-%     end
-% 
-%     return straits
-% end
 % 
 % function PlotStraitsData(strait)
 % 
