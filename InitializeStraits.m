@@ -94,7 +94,7 @@ function strait = DefineStrait(DataParams,straitParams,name)
 
 timeEdges           = datetime(1990:1990+DataParams.N,1,1) ;
 timePeriods         = diff(timeEdges) ;
-timeMidpoints       = timeEdges(1) + timePeriods./2 ;
+timeMidpoints       = timeEdges(1:end-1) + timePeriods/2 ;       % Notice weird datetime arithmetic and syntax!
 
 strait.name         = name ;
 strait.normal_speed = DefineSpeed(DataParams,straitParams) ;

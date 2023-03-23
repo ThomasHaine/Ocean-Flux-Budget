@@ -2,8 +2,10 @@
 % 
 % 
 [straits, DataParams, FluxParams] = InitializeStraits(false) ;
-% straitName = collect(keys(straits))[1]
-% budgets = ComputeBudgets(straits)
+straits = UpdateStraits(FluxParams, straits) ;
+budgets = ComputeBudgets(straits) ;
+PlotStraitsData(straits.FramStrait)
+
 % 
 % function buildDropdown(straits)
 %     labelNames = keys(straits)
