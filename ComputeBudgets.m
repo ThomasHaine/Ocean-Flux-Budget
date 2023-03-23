@@ -9,8 +9,10 @@ end
 %% Local functions
 function budget = accumulateBudget(straits, keyName)
 straitNames = fieldnames(straits) ;
+budget.total = zeros(numel(straits.(straitNames{1}).time_periods),1) ;
 for ss = 1:numel(straitNames)
 strait = straitNames{ss} ;
-    budget.(strait) = cumsum(straits.(strait).time_periods' .* straits.(strait).(keyName)) ;
+    budget.(strait) = cumsum(seconds(straits.(strait).time_periods') .* straits.(strait).(keyName)) ;
+    budget.total = budget.total + budget.(strait) ;
 end % ss
 end

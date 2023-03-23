@@ -65,13 +65,11 @@ straits.DavisStrait = DavisStrait ;
 
 
 straits = UpdateStraits(FluxParams, straits) ;
-if (balanceFlag)
+if(balanceFlag)
     straits = BalanceMass(straits) ;
-    straits = UpdateStraits(FluxParams, straits) ;
 end % if
 
 end
-
 
 %% Local functions
 
@@ -152,7 +150,7 @@ function straits = BalanceMass(straits)
     straitNames = fieldnames(straits) ;
     for ss = 1:numel(straitNames)
         strait = straitNames{ss} ;
-        straits.(strait).normal.speed = straits.(strait).normal.speed - (massConverg ./ numel(straitNames)) ./ (straits.(strait).density .* straits.(strait).parameters.area) ;
+        straits.(strait).normal_speed = straits.(strait).normal_speed - (massConverg ./ numel(straitNames)) ./ (straits.(strait).density .* straits.(strait).parameters.area) ;
     end % ss
 end
 
@@ -162,8 +160,8 @@ function massConverg = ComputeMassConverg(straits)
     for ss = 1:numel(straitNames)
         strait = straitNames{ss} ;
         tmp = straits.(strait).mass_flux ;
-        if (flag || exist(massConverg,'var'))
-            massConverg = similar(tmp) ;
+        if (flag || ~exist('massConverg','var'))
+            massConverg = zeros(size(tmp)) ;
             flag = false ;
         end % if
         massConverg = massConverg + tmp ;
