@@ -77,10 +77,11 @@ end
 
 function tmp = DefineDataParameters(N)
 % Define data parameters.
-tmp.N     = N ;     % Number of entries in the timeseries
-tmp.c     = 0.9 ;   % Constant    parameter in AR(1) process
-tmp.phi   = 0.8 ;   % Persistence parameter in AR(1) process
-tmp.p_ref = 0.0 ;   % Reference pressure [N/m^2]
+tmp.N           = N ;       % Number of entries in the timeseries
+tmp.c           = 0.9 ;     % Constant    parameter in AR(1) process
+tmp.phi         = 0.8 ;     % Persistence parameter in AR(1) process
+tmp.p_ref       = 0.0 ;     % Reference pressure [N/m^2]
+tmp.massBalance = false ;   % Flag for overall mass balance, or not.
 end
 
 function tmp = DefineFluxParameters()
@@ -104,7 +105,6 @@ strait.time         = timeMidpoints ;
 strait.time_periods = timePeriods ;
 strait.parameters   = straitParams ;
 strait.density      = ComputeDensity(DataParams,strait) ;
-
 end
 
 function speeds = DefineSpeed(DataParams,straitParams)
@@ -126,8 +126,13 @@ end
 
 function v = ar1(N,c,phi,std)
 % AR(1) process.
+
+% Equilibrated start up
+sample_start = c / (1 - phi) + randn(1) * std / sqrt(1 - phi^2) ;
+
+% Compute
 v = zeros(N,1) ;
-x = 0 ;         % Starting value
+x = sample_start ;         % Starting value
 if(N > 0)
     v(1) = x ;
     for ii=2:N
