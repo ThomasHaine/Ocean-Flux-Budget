@@ -75,23 +75,27 @@ end
 
 function tmp = DefineDataParameters(N)
 % Define data parameters.
-tmp.N           = N ;       % Number of entries in the timeseries
-tmp.c           = 0.9 ;     % Constant    parameter in AR(1) process
-tmp.phi         = 0.8 ;     % Persistence parameter in AR(1) process
-tmp.p_ref       = 0.0 ;     % Reference pressure [N/m^2]
-tmp.massBalance = false ;   % Flag for overall mass balance, or not.
+tmp.N           = N ;                       % Number of entries in the timeseries
+tmp.start_date  = datetime(1990,1,1) ;      % Default start date.
+tmp.end_date    = datetime(2020,1,1) ;      % Default end date.
+tmp.c           = 0.9 ;                     % Constant    parameter in AR(1) process
+tmp.phi         = 0.8 ;                     % Persistence parameter in AR(1) process
+tmp.p_ref       = 0.0 ;                     % Reference pressure [N/m^2]
+tmp.massBalance = false ;                   % Default flag for overall mass balance, or not.
+
 end
 
 function tmp = DefineFluxParameters()
-tmp.T_ref =  0.0 ;      % oC
-tmp.S_ref = 34.8 ;      % g/kg
-tmp.C_p   = gsw_cp0 ;   % J/kg/K
+tmp.T_ref =  0.0 ;      % Default reference temperature,   oC
+tmp.S_ref = 34.8 ;      % Default reference salinity,      g/kg
+tmp.C_p   = gsw_cp0 ;   % Seawater specific heat capacity, J/kg/K
 end
 
 function strait = DefineStrait(DataParams,straitParams,name)
 % times are at mid points and of duration timePeriods
 
-timeEdges           = datetime(1990:1990+DataParams.N,1,1) ;
+% timeEdges           = datetime(1990:1990+DataParams.N,1,1) ;
+timeEdges           = linspace(DataParams.start_date,DataParams.end_date,DataParams.N+1) ;
 timePeriods         = diff(timeEdges) ;
 timeMidpoints       = timeEdges(1:end-1) + timePeriods/2 ;       % Notice weird datetime arithmetic and syntax!
 
