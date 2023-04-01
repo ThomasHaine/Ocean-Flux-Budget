@@ -1,7 +1,4 @@
-function [straits, DataParams, FluxParams] = InitializeStraits(balanceFlag)
-
-DataParams = InitializeDataParameters(32) ;
-FluxParams = DefineFluxParameters() ;
+function straits = InitializeStraits(balanceFlag,DataParams,FluxParams)
 
 % Define cross-sectional area of each strait here. See Tsubouchi et al. (2018) Fig 1 for these rough estimates
 % Also define statistical properties of timeseries for each strait. See Tsubouchi et al. (2018) Table 3 and Figs. 2 and 4.
