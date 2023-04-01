@@ -1,4 +1,4 @@
-function straits = InitializeStraits(balanceFlag,DataParams,FluxParams)
+function straits = InitializeStraits(DataParams,FluxParams)
 
 % Define cross-sectional area of each strait here. See Tsubouchi et al. (2018) Fig 1 for these rough estimates
 % Also define statistical properties of timeseries for each strait. See Tsubouchi et al. (2018) Table 3 and Figs. 2 and 4.
@@ -60,9 +60,8 @@ straits.DavisStrait = DavisStrait ;
 % # "BSO" => BSO,
 % # "Runoff + precipitation - evapouration" => PmEmR
 
-
 straits = UpdateStraits(FluxParams, straits) ;
-if(balanceFlag)
+if(DataParams.massBalance)
     straits = BalanceMass(straits) ;
 end % if
 
