@@ -61,8 +61,11 @@ straits.DavisStrait = DavisStrait ;
 % # "Runoff + precipitation - evapouration" => PmEmR
 
 straits = UpdateStraits(FluxParams, straits) ;
-if(DataParams.massBalance)
+if(strcmp(DataParams.massBalance,'On'))
     straits = BalanceMass(straits) ;
+    fprintf(1,"balancing mass...\n") ;
+else
+    fprintf(1,"not balancing mass...\n") ;
 end % if
 
 end
@@ -127,7 +130,6 @@ out = gsw_rho(strait.salinity, strait.temperature,DataParams.p_ref) ;
 end
 
 function straits = BalanceMass(straits)
-    fprintf(1,"balancing...") ;
     massConverg = ComputeMassConverg(straits) ;
     straitNames = fieldnames(straits) ;
     for ss = 1:numel(straitNames)
