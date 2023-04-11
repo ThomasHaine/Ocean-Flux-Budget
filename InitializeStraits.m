@@ -84,7 +84,7 @@ RpPmEStrait = DefineStrait(DataParams,straitParams,"R + P - E") ;
 
 straits.WestFramStrait = WestFramStrait ;
 straits.EastFramStrait = EastFramStrait ;
-straits.BSOStrait      = EastFramStrait ;
+straits.BSOStrait      = BSOStrait ;
 straits.DavisStrait    = DavisStrait ;
 straits.BeringStrait   = BeringStrait ;
 straits.RpPmEStrait    = RpPmEStrait ;
