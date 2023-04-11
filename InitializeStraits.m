@@ -39,7 +39,7 @@ straitParams.temp_mean      = 0.0 ;         % Temperature average value [C]
 straitParams.salinity_std   = 1.0 ;         % Salinity    standard deviation [g/kg]
 straitParams.salinity_Delta = 0.0 ;         % Salinity    change over timeseries [g/kg]
 straitParams.salinity_mean  = 33.0 ;        % Salinity    average value [g/kg]
-straitParams.area           = 2e8 ;         % Strait cross-sectional area [m^2]
+straitParams.area           = 3.8e6 ;       % Strait cross-sectional area [m^2]
 BeringStrait = DefineStrait(DataParams,straitParams,"Bering Strait") ;
 
 % R+P-E
@@ -52,7 +52,7 @@ straitParams.temp_mean      = 0.0 ;         % Temperature average value [C]
 straitParams.salinity_std   = 1.0 ;         % Salinity    standard deviation [g/kg]
 straitParams.salinity_Delta = 0.0 ;         % Salinity    change over timeseries [g/kg]
 straitParams.salinity_mean  = 33.0 ;        % Salinity    average value [g/kg]
-straitParams.area           = 2e8 ;         % Strait cross-sectional area [m^2]
+straitParams.area           = 3.2e5 ;       % Strait cross-sectional area [m^2]
 RpPmEStrait = DefineStrait(DataParams,straitParams,"R + P - E") ;
 
 straits.FramStrait  = FramStrait ;
