@@ -29,43 +29,40 @@ straitParams.salinity_mean  = 33.0 ;        % Salinity    average value [g/kg]
 straitParams.area           = 2e8 ;         % Strait cross-sectional area [m^2]
 DavisStrait = DefineStrait(DataParams,straitParams,"Davis Strait") ;
 
-% # Bering Strait
-% straitParams = Dict(
-%     "speed_std" => 0.018u"m/s", "speed_Delta" => 0.0u"m/s", "speed_mean" => 0.18u"m/s",
-%     "temp_std" => 2u"K", "temp_Delta" => 0.0u"K", "temp_mean" => 273.15u"K",
-%     "salinity_std" => 0.5u"g/kg", "salinity_Delta" => 0.0u"g/kg", "salinity_mean" => 32.0u"g/kg",
-%     "area" => 3.8e6u"m^2")
-% BeringStrait = DefineStrait(DataParams,straitParams,"Bering Strait")
-%
-% # BSO
-% straitParams = Dict(
-%     "speed_std" => 0.0005u"m/s", "speed_Delta" => 0.0u"m/s", "speed_mean" => 0.0096u"m/s",
-%     "temp_std" => 1u"K", "temp_Delta" => 0.0u"K", "temp_mean" => 277.0u"K",
-%     "salinity_std" => 0.2u"g/kg", "salinity_Delta" => 0.0u"g/kg", "salinity_mean" => 34.8u"g/kg",
-%     "area" => 2.4e8u"m^2")
-% BSO = DefineStrait(DataParams,straitParams,"BSO")
-%
-% # R+P-E
-% # Assumes a mean speed of 0.6m/s and a total flux of 6000km^3/yr from H et al. (2015) Table 1.
-% straitParams = Dict(
-%     "speed_std" => 0.05u"m/s", "speed_Delta" => 0.0u"m/s", "speed_mean" => 0.6u"m/s",
-%     "temp_std" => 0.2u"K", "temp_Delta" => 0.0u"K", "temp_mean" => 273.15u"K",
-%     "salinity_std" => 0.1u"g/kg", "salinity_Delta" => 0.0u"g/kg", "salinity_mean" => 0.0u"g/kg",
-%     "area" => 3.2e5u"m^2")
-% PmEmR = DefineStrait(DataParams,straitParams,"Runoff + precipitation - evapouration")
-%
+% Bering Strait
+straitParams.speed_std      = 0.0002 ;      % Speed standard deviation [m/s]
+straitParams.speed_Delta    = 0.0 ;         % Speed change over timeseries [m/s]
+straitParams.speed_mean     = -0.01 ;       % Speed average value [m/s]
+straitParams.temp_std       = 1.0 ;         % Temperature standard deviation [C]
+straitParams.temp_Delta     = 0.0 ;         % Temperature change over timeseries [C]
+straitParams.temp_mean      = 0.0 ;         % Temperature average value [C]
+straitParams.salinity_std   = 1.0 ;         % Salinity    standard deviation [g/kg]
+straitParams.salinity_Delta = 0.0 ;         % Salinity    change over timeseries [g/kg]
+straitParams.salinity_mean  = 33.0 ;        % Salinity    average value [g/kg]
+straitParams.area           = 2e8 ;         % Strait cross-sectional area [m^2]
+BeringStrait = DefineStrait(DataParams,straitParams,"Bering Strait") ;
+
+% R+P-E
+straitParams.speed_std      = 0.0002 ;      % Speed standard deviation [m/s]
+straitParams.speed_Delta    = 0.0 ;         % Speed change over timeseries [m/s]
+straitParams.speed_mean     = -0.01 ;       % Speed average value [m/s]
+straitParams.temp_std       = 1.0 ;         % Temperature standard deviation [C]
+straitParams.temp_Delta     = 0.0 ;         % Temperature change over timeseries [C]
+straitParams.temp_mean      = 0.0 ;         % Temperature average value [C]
+straitParams.salinity_std   = 1.0 ;         % Salinity    standard deviation [g/kg]
+straitParams.salinity_Delta = 0.0 ;         % Salinity    change over timeseries [g/kg]
+straitParams.salinity_mean  = 33.0 ;        % Salinity    average value [g/kg]
+straitParams.area           = 2e8 ;         % Strait cross-sectional area [m^2]
+RpPmEStrait = DefineStrait(DataParams,straitParams,"R + P - E") ;
+
 straits.FramStrait  = FramStrait ;
 straits.DavisStrait = DavisStrait ;
-% # "Bering Strait" => BeringStrait,
-% # "BSO" => BSO,
-% # "Runoff + precipitation - evapouration" => PmEmR
+straits.BeringStrait = BeringStrait ;
+straits.RpPmEStrait = RpPmEStrait ;
 
 straits = UpdateStraits(FluxParams, straits) ;
 if(strcmp(DataParams.massBalance,'On'))
     straits = BalanceMass(straits) ;
-    fprintf(1,"balancing mass...\n") ;
-else
-    fprintf(1,"not balancing mass...\n") ;
 end % if
 
 end
@@ -74,8 +71,6 @@ end
 
 function strait = DefineStrait(DataParams,straitParams,name)
 % times are at mid points and of duration timePeriods
-
-% timeEdges           = datetime(1990:1990+DataParams.N,1,1) ;
 timeEdges           = linspace(DataParams.start_date,DataParams.end_date,DataParams.N+1) ;
 timePeriods         = diff(timeEdges) ;
 timeMidpoints       = timeEdges(1:end-1) + timePeriods/2 ;       % Notice weird datetime arithmetic and syntax!
