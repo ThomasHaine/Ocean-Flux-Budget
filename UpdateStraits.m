@@ -21,7 +21,7 @@ function [vol_flux,mass_flux,salt_flux,heat_flux,LFC_flux] = ComputeFluxes(strai
 vol_flux  =  strait.parameters.area .* strait.normal_speed ;
 mass_flux =                   strait.density .* vol_flux ;
 heat_flux = FluxParams.C_p .* strait.density .* vol_flux .* (strait.temperature - FluxParams.T_ref) ;
-LFC_flux  =                                     vol_flux .* (strait.salinity    - FluxParams.S_ref) ;
+LFC_flux  =                                     vol_flux .* (FluxParams.S_ref - strait.salinity) ;
 salt_flux =                   strait.density .* vol_flux .*  strait.salinity./1e3 ;         % g/kg -> kg/kg conversion
 end
 
