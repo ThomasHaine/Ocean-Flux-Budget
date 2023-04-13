@@ -60,15 +60,17 @@ straitParams.salinity_Delta = 0.0 ;         % Salinity    change over timeseries
 BSO = DefineStrait(DataParams,straitParams,"BSO") ;
 
 % Davis Strait
+% T_etal12 numbers disagree somewhat with W_etal23 numbers.
+% Tune numbers to resemble W_etal23.
 straitParams.area           = 2e8 ;         % Strait cross-sectional area [m^2]
 
-straitParams.speed_mean     = -3.1e6/straitParams.area ; % Speed average value [m/s]
-straitParams.speed_std      = (0.7/3.1)*straitParams.speed_mean ;      % Speed standard deviation [m/s]
-straitParams.speed_Delta    = 0.0 ;         % Speed change over timeseries [m/s]
+straitParams.speed_mean     = -3.1e6/straitParams.area ;                 % Speed average value [m/s]
+straitParams.speed_std      = (0.4/3.1)*straitParams.speed_mean ;        % Speed standard deviation [m/s]
+straitParams.speed_Delta    = 0.0 ;                                      % Speed change over timeseries [m/s]
 
-straitParams.temp_mean      = 0.0 ;         % Temperature average value [C]
-straitParams.temp_std       = 1.0 ;         % Temperature standard deviation [C]
-straitParams.temp_Delta     = 1.0 ;         % Temperature change over timeseries [C]
+straitParams.temp_mean      = 0.3 ;         % Temperature average value [C]
+straitParams.temp_std       = 0.3 ;         % Temperature standard deviation [C]
+straitParams.temp_Delta     = 0.0 ;         % Temperature change over timeseries [C]
 
 straitParams.salinity_mean  = 32.5 ;        % Salinity    average value [g/kg]
 straitParams.salinity_std   = 0.2 ;         % Salinity    standard deviation [g/kg]
