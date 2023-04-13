@@ -14,7 +14,7 @@ straitParams.speed_mean     = (-0.4-0.05-5.4)*1e6/straitParams.area ;  % Speed a
 straitParams.speed_std      = (2.72/(0.4+0.05+5.4))*straitParams.speed_mean ;      % Speed standard deviation [m/s]
 straitParams.speed_Delta    = 0.0 ;         % Speed change over timeseries [m/s]
 
-straitParams.temp_mean      = 1.0 ;         % Temperature average value [C]
+straitParams.temp_mean      = -1.0 ;        % Temperature average value [C]
 straitParams.temp_std       = 0.2 ;         % Temperature standard deviation [C]
 straitParams.temp_Delta     = 0.0 ;         % Temperature change over timeseries [C]
 
@@ -28,9 +28,9 @@ WestFramStrait = DefineStrait(DataParams,straitParams,"West Fram Strait (EGC)") 
 % from Tetal12 Table 3.
 straitParams.area           = 3e8 ;         % Strait cross-sectional area [m^2]
 
-straitParams.speed_mean     = (3.8+0.3)*1e6/straitParams.area ; % Speed average value [m/s]
-straitParams.speed_std      = ((3.0+1.3)/(3.8+0.3))*straitParams.speed_mean ;      % Speed standard deviation [m/s]
-straitParams.speed_Delta    = 0.0 ;         % Speed change over timeseries [m/s]
+straitParams.speed_mean     = (3.8+0.3)*1e6/straitParams.area ;                     % Speed average value [m/s]
+straitParams.speed_std      = ((3.0+1.3)/(3.8+0.3))*straitParams.speed_mean ;       % Speed standard deviation [m/s]
+straitParams.speed_Delta    = 0.0 ;                                                 % Speed change over timeseries [m/s]
 
 straitParams.temp_mean      = 4.0 ;         % Temperature average value [C]
 straitParams.temp_std       = 0.2 ;         % Temperature standard deviation [C]
@@ -45,9 +45,9 @@ EastFramStrait = DefineStrait(DataParams,straitParams,"East Fram Strait (WSC)") 
 % BSO
 straitParams.area           = 3e8 ;         % Strait cross-sectional area [m^2]
 
-straitParams.speed_mean     = 3.6e6/straitParams.area ; % Speed average value [m/s]
-straitParams.speed_std      = (1.1/3.6)*straitParams.speed_mean ;      % Speed standard deviation [m/s]
-straitParams.speed_Delta    = 0.0 ;         % Speed change over timeseries [m/s]
+straitParams.speed_mean     = 3.6e6/straitParams.area ;                  % Speed average value [m/s]
+straitParams.speed_std      = (1.1/3.6)*straitParams.speed_mean ;        % Speed standard deviation [m/s]
+straitParams.speed_Delta    = 0.0 ;                                      % Speed change over timeseries [m/s]
 
 straitParams.temp_mean      = 5.5 ;         % Temperature average value [C]
 straitParams.temp_std       = 0.2 ;         % Temperature standard deviation [C]
@@ -122,7 +122,7 @@ straits.RpPmEStrait    = RpPmEStrait ;
 
 straits = UpdateStraits(FluxParams, straits) ;
 if(strcmp(DataParams.massBalance,'On'))
-    straits = BalanceMass(straits) ;
+    straits = BalanceMass(straits,'WestFramStrait') ;           % Hard code balance adjustment to EGC.
 end % if
 
 end
@@ -185,13 +185,15 @@ function out = ComputeDensity(DataParams,strait)
 out = gsw_rho(strait.salinity, strait.temperature,DataParams.p_ref) ;
 end
 
-function straits = BalanceMass(straits)
+function straits = BalanceMass(straits,balance_strait)
     massConverg = ComputeMassConverg(straits) ;
     straitNames = fieldnames(straits) ;
-    for ss = 1:numel(straitNames)
-        strait = straitNames{ss} ;
-        straits.(strait).normal_speed = straits.(strait).normal_speed - (massConverg ./ numel(straitNames)) ./ (straits.(strait).density .* straits.(strait).parameters.area) ;
-    end % ss
+    straits.(balance_strait).normal_speed = straits.(balance_strait).normal_speed - massConverg ./ (straits.(balance_strait).density .* straits.(balance_strait).parameters.area) ;
+    % 
+    % for ss = 1:numel(straitNames)
+    %     strait = straitNames{ss} ;
+    %     straits.(strait).normal_speed = straits.(strait).normal_speed - (massConverg ./ numel(straitNames)) ./ (straits.(strait).density .* straits.(strait).parameters.area) ;
+    % end % ss
 end
 
 function massConverg = ComputeMassConverg(straits)
