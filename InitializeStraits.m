@@ -83,7 +83,7 @@ straitParams.speed_mean     = 1.0e6/straitParams.area ;                 % Speed 
 straitParams.speed_std      = (0.2/1.0)*straitParams.speed_mean ;       % Speed standard deviation [m/s]
 straitParams.speed_Delta    = 0.3e6/straitParams.area  ;                % Speed change over timeseries [m/s]
 
-straitParams.temp_mean      = 0.0 ;         % Temperature average value [C]
+straitParams.temp_mean      = 0.25 ;        % Temperature average value [C]
 straitParams.temp_std       = 0.25 ;        % Temperature standard deviation [C]
 straitParams.temp_Delta     = 1.0 ;         % Temperature change over timeseries [C]
 
@@ -145,18 +145,18 @@ end
 
 function speeds = DefineSpeed(DataParams,straitParams)
 speeds = ar1(DataParams.N,DataParams.c,DataParams.phi,straitParams.speed_std) ;
-speeds = speeds - mean(speeds) + straitParams.speed_mean ;
+speeds = speeds - mean(speeds) + straitParams.speed_mean + linspace(-straitParams.speed_Delta/2,straitParams.speed_Delta/2,DataParams.N)' ;
 end
 
 function temps = DefineTemperature(DataParams,straitParams)
 temps = ar1(DataParams.N,DataParams.c,DataParams.phi,straitParams.temp_std) ;
-temps = temps - mean(temps) + straitParams.temp_mean ;
+temps = temps - mean(temps) + straitParams.temp_mean + linspace(-straitParams.temp_Delta/2,straitParams.temp_Delta/2,DataParams.N)' ;
 temps = max(temps,-1.9) ;      % Clip temperatures so they're above freezing.
 end
 
 function salts = DefineSalinity(DataParams,straitParams)
 salts = ar1(DataParams.N,DataParams.c,DataParams.phi,straitParams.salinity_std) ;
-salts = salts - mean(salts) + straitParams.salinity_mean ;
+salts = salts - mean(salts) + straitParams.salinity_mean + linspace(-straitParams.salinity_Delta,straitParams.salinity_Delta/2,DataParams.N)' ;
 salts = max(salts,0.0) ;              % Clip salinities so they're positive
 end
 
