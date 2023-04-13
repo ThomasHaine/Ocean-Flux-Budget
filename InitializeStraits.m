@@ -7,6 +7,8 @@ function straits = InitializeStraits(DataParams,FluxParams)
 % are based on T_etal12 Table 3 and Hetal15 Fig. 4
 % See also Wang et al. Figure 2 for hydrographic statistics.
 % Compute mean speed from estimated volume flux and cross-sectional area.
+% Also adjust Fram Strait values to give net FW convergence and
+% accumulation.
 
 % West Fram Strait (EGC). This includes sea ice from Tetal12 Table 3.
 straitParams.area           = 3e8 ;         % Strait cross-sectional area [m^2]
@@ -18,7 +20,7 @@ straitParams.temp_mean      = -1.0 ;        % Temperature average value [C]
 straitParams.temp_std       = 0.2 ;         % Temperature standard deviation [C]
 straitParams.temp_Delta     = 0.0 ;         % Temperature change over timeseries [C]
 
-straitParams.salinity_mean  = 33.5 ;        % Salinity    average value [g/kg]
+straitParams.salinity_mean  = 33.8 ;        % Salinity    average value [g/kg]
 straitParams.salinity_std   = 0.15 ;        % Salinity    standard deviation [g/kg]
 straitParams.salinity_Delta = 0.0 ;         % Salinity    change over timeseries [g/kg]
 
@@ -99,9 +101,9 @@ BeringStrait = DefineStrait(DataParams,straitParams,"Bering Strait") ;
 % Assumes a mean speed of 0.6m/s and a total flux of 6000km^3/yr from H et al. (2015) Table 1.
 straitParams.area           = 3.2e5 ;       % Strait cross-sectional area [m^2]
 
-straitParams.speed_mean     = 0.180e6/straitParams.area ; % Speed average value [m/s]
-straitParams.speed_std      = (0.009/0.18)*straitParams.speed_mean ;      % Speed standard deviation [m/s]
-straitParams.speed_Delta    = 0.0 ;         % Speed change over timeseries [m/s]
+straitParams.speed_mean     = 0.180e6/straitParams.area ;                % Speed average value [m/s]
+straitParams.speed_std      = (0.009/0.18)*straitParams.speed_mean ;     % Speed standard deviation [m/s]
+straitParams.speed_Delta    = 0.050e6/straitParams.area ;                % Speed change over timeseries [m/s]
 
 straitParams.temp_mean      = 0.0 ;         % Temperature average value [C]
 straitParams.temp_std       = 1.0 ;         % Temperature standard deviation [C]
