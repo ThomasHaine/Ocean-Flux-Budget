@@ -1,8 +1,5 @@
 function straits = InitializeStraits(DataParams,FluxParams)
 
-% Random number generator: This makes random numbers reproducible.
-rng(1) ;
-
 % Define cross-sectional area of each strait here. See Tsubouchi et al.
 % (2018) Fig 1 for these rough estimates.
 % See also Tsubouchi et al. (2018) Table 3 and Figs. 2 and 4.
