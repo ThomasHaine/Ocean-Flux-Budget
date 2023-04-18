@@ -191,13 +191,7 @@ end
 
 function straits = BalanceMass(straits,balance_strait)
     massConverg = ComputeMassConverg(straits) ;
-    straitNames = fieldnames(straits) ;
     straits.(balance_strait).normal_speed = straits.(balance_strait).normal_speed - massConverg ./ (straits.(balance_strait).density .* straits.(balance_strait).parameters.area) ;
-    % 
-    % for ss = 1:numel(straitNames)
-    %     strait = straitNames{ss} ;
-    %     straits.(strait).normal_speed = straits.(strait).normal_speed - (massConverg ./ numel(straitNames)) ./ (straits.(strait).density .* straits.(strait).parameters.area) ;
-    % end % ss
 end
 
 function massConverg = ComputeMassConverg(straits)

@@ -7,4 +7,7 @@ tmp.c           = 0.9 ;                     % Constant    parameter in AR(1) pro
 tmp.phi         = 0.8 ;                     % Persistence parameter in AR(1) process
 tmp.p_ref       = 0.0 ;                     % Reference pressure [N/m^2]
 tmp.massBalance = 'On' ;                    % Default flag for overall mass balance, or not.
+tmp.ctrlVolTemp = 0.0 ;                     % Average starting temperature [C]
+tmp.ctrlVolSal  = 34.8 ;                    % Average starting salinity [g/kg]
+tmp.ctrlVolMass = (18.07 + 0.542 + 0.0028)*1e6*1e9*gsw_rho(tmp.ctrlVolSal,tmp.ctrlVolTemp,0) ;
 end
