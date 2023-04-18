@@ -1,13 +1,18 @@
 function tmp = InitializeDataParameters(N)
 % Define data parameters.
 tmp.N               = N ;                       % Number of entries in the timeseries
-tmp.start_date      = datetime(1990,1,1) ;      % Default start date.
-tmp.end_date        = datetime(2020,1,1) ;      % Default end date.
 tmp.c               = 0.9 ;                     % Constant    parameter in AR(1) process
 tmp.phi             = 0.8 ;                     % Persistence parameter in AR(1) process
 tmp.p_ref           = 0.0 ;                     % Reference pressure [N/m^2]
 tmp.massBalance     = 'On' ;                    % Default flag for overall mass balance, or not.
 tmp.C_p             = gsw_cp0 ;                 % Seawater specific heat capacity, J/kg/K
+
+% times are at mid points and of duration time_periods
+tmp.start_date      = datetime(1990,1,1) ;      % Default start date.
+tmp.end_date        = datetime(2020,1,1) ;      % Default end date.
+timeEdges           = linspace(tmp.start_date,tmp.end_date,tmp.N+1) ;
+tmp.time_periods    = diff(timeEdges) ;
+tmp.time            = timeEdges(1:end-1) + tmp.time_periods/2 ;       % Notice weird datetime arithmetic and syntax!
 
 % Control volume properties
 tmp.InitCtrlVolTemp = 0.0 ;                                                   % Average starting temperature [C]

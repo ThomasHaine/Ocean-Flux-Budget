@@ -134,17 +134,10 @@ end
 %% Local functions
 
 function strait = DefineStrait(DataParams,straitParams,name)
-% times are at mid points and of duration timePeriods
-timeEdges           = linspace(DataParams.start_date,DataParams.end_date,DataParams.N+1) ;
-timePeriods         = diff(timeEdges) ;
-timeMidpoints       = timeEdges(1:end-1) + timePeriods/2 ;       % Notice weird datetime arithmetic and syntax!
-
 strait.name         = name ;
 strait.normal_speed = DefineSpeed(DataParams,straitParams) ;
 strait.temperature  = DefineTemperature(DataParams,straitParams) ;
 strait.salinity     = DefineSalinity(DataParams,straitParams) ;
-strait.time         = timeMidpoints ;
-strait.time_periods = timePeriods ;
 strait.parameters   = straitParams ;
 strait.density      = ComputeDensity(DataParams,strait) ;
 end
