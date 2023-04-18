@@ -117,12 +117,32 @@ straitParams.salinity_Delta = 0.0 ;         % Salinity    change over timeseries
 
 RpPmEStrait = DefineStrait(DataParams,straitParams,"R + P - E") ;
 
+% Air/sea heat flux
+% Set speed, temperature, salinity to 0.
+straitParams.area           = DataParams.CtrlVolArea ;       % Strait cross-sectional area [m^2]
+
+straitParams.speed_mean     = 0.0 ;         % Speed average value [m/s]
+straitParams.speed_std      = 0.0 ;         % Speed standard deviation [m/s]
+straitParams.speed_Delta    = 0.0 ;         % Speed change over timeseries [m/s]
+
+straitParams.temp_mean      = 0.0 ;         % Temperature average value [C]
+straitParams.temp_std       = 0.0 ;         % Temperature standard deviation [C]
+straitParams.temp_Delta     = 0.0 ;         % Temperature change over timeseries [C]
+
+straitParams.salinity_mean  = 0.0 ;         % Salinity    average value [g/kg]
+straitParams.salinity_std   = 0.0 ;         % Salinity    standard deviation [g/kg]
+straitParams.salinity_Delta = 0.0 ;         % Salinity    change over timeseries [g/kg]
+
+AirSeaStrait = DefineStrait(DataParams,straitParams,"Air/sea exchange") ;
+
+% Assemble all gateway straits
 straits.WestFramStrait = WestFramStrait ;
 straits.EastFramStrait = EastFramStrait ;
 straits.BSO            = BSO ;
 straits.DavisStrait    = DavisStrait ;
 straits.BeringStrait   = BeringStrait ;
 straits.RpPmEStrait    = RpPmEStrait ;
+straits.AirSeaStrait   = AirSeaStrait ;
 
 straits = UpdateStraits(FluxParams,DataParams,straits) ;
 if(strcmp(DataParams.massBalance,'On'))
@@ -160,24 +180,25 @@ salts = max(salts,0.0) ;              % Clip salinities so they're positive
 end
 
 function out = ComputeDensity(DataParams,strait)
-out = gsw_rho(strait.salinity, strait.temperature,DataParams.p_ref) ;
+out = gsw_rho(strait.salinity,strait.temperature,DataParams.p_ref) ;
 end
 
 function straits = BalanceMass(straits,balance_strait)
-    massConverg = ComputeMassConverg(straits) ;
-    straits.(balance_strait).normal_speed = straits.(balance_strait).normal_speed - massConverg ./ (straits.(balance_strait).density .* straits.(balance_strait).parameters.area) ;
-end
+massConverg = ComputeMassConverg(straits) ;
+straits.(balance_strait).normal_speed = straits.(balance_strait).normal_speed - massConverg ./ (straits.(balance_strait).density .* straits.(balance_strait).parameters.area) ;
 
-function massConverg = ComputeMassConverg(straits)
-    flag = true ;
-    straitNames = fieldnames(straits) ;
-    for ss = 1:numel(straitNames)
-        strait = straitNames{ss} ;
-        tmp = straits.(strait).mass_flux ;
-        if (flag || ~exist('massConverg','var'))
-            massConverg = zeros(size(tmp)) ;
-            flag = false ;
-        end % if
-        massConverg = massConverg + tmp ;
-    end % ss
+    function massConverg = ComputeMassConverg(straits)
+        flag = true ;
+        straitNames = fieldnames(straits) ;
+        for ss = 1:numel(straitNames)
+            strait = straitNames{ss} ;
+            tmp = straits.(strait).mass_flux ;
+            if (flag || ~exist('massConverg','var'))
+                massConverg = zeros(size(tmp)) ;
+                flag = false ;
+            end % if
+            massConverg = massConverg + tmp ;
+        end % ss
+    end
+
 end

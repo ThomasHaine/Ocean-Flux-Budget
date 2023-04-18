@@ -13,6 +13,7 @@ tmp.BSO.color            = [0.3010 0.7450 0.9330] ;
 tmp.DavisStrait.color    = [0.8500 0.3250 0.0980] ;
 tmp.BeringStrait.color   = [0.9290 0.6940 0.1250] ;
 tmp.RpPmEStrait.color    = [0.4940 0.1840 0.5560] ;
+tmp.AirSeaStrait.color   = [0.6350 0.0780 0.1840] ;
 
 % Plot sizes
 tmp.height               = 125 ;
