@@ -124,7 +124,7 @@ straits.DavisStrait    = DavisStrait ;
 straits.BeringStrait   = BeringStrait ;
 straits.RpPmEStrait    = RpPmEStrait ;
 
-straits = UpdateStraits(FluxParams, straits) ;
+straits = UpdateStraits(FluxParams,DataParams,straits) ;
 if(strcmp(DataParams.massBalance,'On'))
     straits = BalanceMass(straits,'EastFramStrait') ;           % Hard code balance adjustment to WSC.
 end % if
