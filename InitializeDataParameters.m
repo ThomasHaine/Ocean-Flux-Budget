@@ -12,8 +12,8 @@ tmp.C_p             = gsw_cp0 ;                 % Seawater specific heat capacit
 % Initial control volume properties
 tmp.InitCtrlVolTemp = 0.0 ;                                             % Average starting temperature [C]
 tmp.InitCtrlVolSal  = 34.8 ;                                            % Average starting salinity [g/kg]
-tmp.InitCtrlVolDens = gsw_rho(tmp.ctrlVolSal,tmp.ctrlVolTemp,0) ;       % Average starting density [kg/m^3]
+tmp.InitCtrlVolDens = gsw_rho(tmp.InitCtrlVolSal,tmp.InitCtrlVolTemp,0) ;       % Average starting density [kg/m^3]
 tmp.InitCtrlVolVol  = (18.07 + 0.542 + 0.0028)*1e6*1e9 ;                % Starting volume [m^3]. From wiki for Arctic Ocean+Barents Sea+Baffin Bay
 tmp.InitCtrlVolMass = tmp.InitCtrlVolVol*tmp.InitCtrlVolDens ;          % Starting mass [kg]
-tmp.InitCtrlVolSalt = tmp.InitCtrlVolSal*tmp.InitCtrlVolMass*1e3 ;      % Starting salt mass [kg]
+tmp.InitCtrlVolSalt = tmp.InitCtrlVolSal*tmp.InitCtrlVolMass*1e-3 ;     % Starting salt mass [kg]
 end
