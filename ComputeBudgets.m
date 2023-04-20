@@ -1,9 +1,9 @@
-function budgets = ComputeBudgets(straits,AirSeaHeatFlux,DataParams)
-budgets.mass   = accumulateBudget(straits,DataParams,"mass_flux") ;
-budgets.salt   = accumulateBudget(straits,DataParams,"salt_flux") ;
-budgets.volume = accumulateBudget(straits,DataParams,"vol_flux") ;
-budgets.LFC    = accumulateBudget(straits,DataParams,"LFC_flux") ;
-budgets.heat   = accumulateBudget(straits,DataParams,"heat_flux") ;
+function budgets = ComputeBudgets(components,AirSeaHeatFlux,DataParams)
+budgets.mass   = accumulateBudget(components,DataParams,"mass_flux") ;
+budgets.salt   = accumulateBudget(components,DataParams,"salt_flux") ;
+budgets.volume = accumulateBudget(components,DataParams,"vol_flux") ;
+budgets.LFC    = accumulateBudget(components,DataParams,"LFC_flux") ;
+budgets.heat   = accumulateBudget(components,DataParams,"heat_flux") ;
 
 % Add air/sea non-advective heat fluxes:
 budgets.heat.AirSeaHeatFlux = AirSeaHeatFlux.fluxes ;
@@ -11,12 +11,14 @@ budgets.heat.total          = budgets.heat.total + budgets.heat.AirSeaHeatFlux ;
 end
 
 %% Local functions
-function budget = accumulateBudget(straits,DataParams,keyName)
-straitNames = fieldnames(straits) ;
+function budget = accumulateBudget(components,DataParams,keyName)
+componentNames = fieldnames(components) ;
 budget.total = zeros(numel(DataParams.time_periods),1) ;
-for ss = 1:numel(straitNames)
-strait = straitNames{ss} ;
-    budget.(strait) = cumsum(seconds(DataParams.time_periods') .* straits.(strait).(keyName)) ;
-    budget.total = budget.total + budget.(strait) ;
+for ss = 1:numel(componentNames)
+    if(strcmp(components.(componentNames{ss}).type,'advective'))     % Only include advective components.
+        component = componentNames{ss} ;
+        budget.(component) = cumsum(seconds(DataParams.time_periods') .* components.(component).(keyName)) ;
+        budget.total = budget.total + budget.(component) ;
+    end % if
 end % ss
 end
