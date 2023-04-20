@@ -1,9 +1,9 @@
 <deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
-  <configuration file="/Users/thaine1/Library/CloudStorage/OneDrive-JohnsHopkins/Documents/MATLAB/Projects/OceanFluxBudget/OceanFluxBudget.prj" location="/Users/thaine1/Library/CloudStorage/OneDrive-JohnsHopkins/Documents/MATLAB/Projects/OceanFluxBudget" name="OceanFluxBudget" target="target.ezdeploy.standalone" target-name="Application Compiler">
+  <configuration file="/Users/thaine1/Library/CloudStorage/OneDrive-JohnsHopkins/Documents/MATLAB/Projects/OceanFluxBudget/OceanFluxBudget_standalone.prj" location="/Users/thaine1/Library/CloudStorage/OneDrive-JohnsHopkins/Documents/MATLAB/Projects/OceanFluxBudget" name="OceanFluxBudget_standalone" target="target.ezdeploy.standalone" target-name="Application Compiler">
     <param.appname>OceanFluxBudget</param.appname>
     <param.icon />
     <param.icons />
-    <param.version>2.0</param.version>
+    <param.version>2.1</param.version>
     <param.authnamewatermark>Thomas Haine</param.authnamewatermark>
     <param.email>Thomas.Haine@jhu.edu</param.email>
     <param.company />
@@ -24,10 +24,10 @@ MR/R2023a/runtime/maci64:MR/R2023a/sys/os/maci64:MR/R2023a/bin/maci64
 If it is defined, set it to the following:
 
 ${DYLD_LIBRARY_PATH}:MR/R2023a/runtime/maci64:MR/R2023a/sys/os/maci64:MR/R2023a/bin/maci64</param.target.install.notes>
-    <param.intermediate>${PROJECT_ROOT}/OceanFluxBudget/for_testing</param.intermediate>
-    <param.files.only>${PROJECT_ROOT}/OceanFluxBudget/for_redistribution_files_only</param.files.only>
-    <param.output>${PROJECT_ROOT}/OceanFluxBudget/for_redistribution</param.output>
-    <param.logdir>${PROJECT_ROOT}/OceanFluxBudget</param.logdir>
+    <param.intermediate>${PROJECT_ROOT}/OceanFluxBudget_standalone/for_testing</param.intermediate>
+    <param.files.only>${PROJECT_ROOT}/OceanFluxBudget_standalone/for_redistribution_files_only</param.files.only>
+    <param.output>${PROJECT_ROOT}/OceanFluxBudget_standalone/for_redistribution</param.output>
+    <param.logdir>${PROJECT_ROOT}/OceanFluxBudget_standalone</param.logdir>
     <param.enable.clean.build>false</param.enable.clean.build>
     <param.user.defined.mcr.options />
     <param.target.type>subtarget.standalone</param.target.type>
@@ -101,10 +101,10 @@ ${DYLD_LIBRARY_PATH}:MR/R2023a/runtime/maci64:MR/R2023a/sys/os/maci64:MR/R2023a/
       <file>${PROJECT_ROOT}/gsw_matlab_v3_06_16/gsw_rho.m</file>
     </fileset.depfun>
     <build-deliverables>
-      <file location="${PROJECT_ROOT}/OceanFluxBudget/for_testing" name="readme.txt" optional="true">/Users/thaine1/Library/CloudStorage/OneDrive-JohnsHopkins/Documents/MATLAB/Projects/OceanFluxBudget/OceanFluxBudget/for_testing/readme.txt</file>
-      <file location="${PROJECT_ROOT}/OceanFluxBudget/for_testing" name="OceanFluxBudget.app" optional="false">/Users/thaine1/Library/CloudStorage/OneDrive-JohnsHopkins/Documents/MATLAB/Projects/OceanFluxBudget/OceanFluxBudget/for_testing/OceanFluxBudget.app</file>
-      <file location="${PROJECT_ROOT}/OceanFluxBudget/for_testing" name="run_OceanFluxBudget.sh" optional="false">/Users/thaine1/Library/CloudStorage/OneDrive-JohnsHopkins/Documents/MATLAB/Projects/OceanFluxBudget/OceanFluxBudget/for_testing/run_OceanFluxBudget.sh</file>
-      <file location="${PROJECT_ROOT}/OceanFluxBudget/for_testing" name="splash.png" optional="false">/Users/thaine1/Library/CloudStorage/OneDrive-JohnsHopkins/Documents/MATLAB/Projects/OceanFluxBudget/OceanFluxBudget/for_testing/splash.png</file>
+      <file location="${PROJECT_ROOT}/OceanFluxBudget_standalone/for_testing" name="OceanFluxBudget.app" optional="false">/Users/thaine1/Library/CloudStorage/OneDrive-JohnsHopkins/Documents/MATLAB/Projects/OceanFluxBudget/OceanFluxBudget_standalone/for_testing/OceanFluxBudget.app</file>
+      <file location="${PROJECT_ROOT}/OceanFluxBudget_standalone/for_testing" name="readme.txt" optional="true">/Users/thaine1/Library/CloudStorage/OneDrive-JohnsHopkins/Documents/MATLAB/Projects/OceanFluxBudget/OceanFluxBudget_standalone/for_testing/readme.txt</file>
+      <file location="${PROJECT_ROOT}/OceanFluxBudget_standalone/for_testing" name="run_OceanFluxBudget.sh" optional="false">/Users/thaine1/Library/CloudStorage/OneDrive-JohnsHopkins/Documents/MATLAB/Projects/OceanFluxBudget/OceanFluxBudget_standalone/for_testing/run_OceanFluxBudget.sh</file>
+      <file location="${PROJECT_ROOT}/OceanFluxBudget_standalone/for_testing" name="splash.png" optional="false">/Users/thaine1/Library/CloudStorage/OneDrive-JohnsHopkins/Documents/MATLAB/Projects/OceanFluxBudget/OceanFluxBudget_standalone/for_testing/splash.png</file>
     </build-deliverables>
     <workflow />
     <matlab>
