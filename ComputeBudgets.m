@@ -6,7 +6,7 @@ budgets.LFC    = accumulateBudget(components,DataParams,"LFC_flux") ;
 budgets.heat   = accumulateBudget(components,DataParams,"heat_flux") ;
 
 % Add air/sea non-advective heat fluxes:
-budgets.heat.AirSeaHeatFlux = components.AirSeaHeatFlux.heat_flux ;
+budgets.heat.AirSeaHeatFlux = cumsum(seconds(DataParams.time_periods') .* components.AirSeaHeatFlux.heat_flux) ;
 budgets.heat.total          = budgets.heat.total + budgets.heat.AirSeaHeatFlux ;
 end
 
