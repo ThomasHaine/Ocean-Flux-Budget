@@ -8,5 +8,5 @@ Clone the repo using the `MATLAB->Project->New->From Git` sequence. Or install t
 
 Theory notes coming soon.
 
-Comments welcome!
+Comments welcome!  (Raise an issue.)
 Thomas.Haine@jhu.edu
