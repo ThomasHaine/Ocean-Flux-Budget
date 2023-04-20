@@ -13,6 +13,7 @@ function straits = InitializeStraits(DataParams,FluxParams)
 % West Fram Strait (EGC). This includes sea ice from Tetal12 Table 3.
 % Reduce variability compared to Tetal12 Table 3.
 % Also the mean volume flux from Tetal12 Table 3 (-5.9Sv) seems too big.
+straitParams.type           = 'advective' ;
 straitParams.area           = 3e8 ;         % Strait cross-sectional area [m^2]
 straitParams.speed_mean     = -4.0*1e6/straitParams.area ;       % Speed average value [m/s]
 straitParams.speed_std      = 1.0*1e6/straitParams.area ;       % Speed standard deviation [m/s]
@@ -30,6 +31,7 @@ WestFramStrait = DefineStrait(DataParams,straitParams,"West Fram Strait (EGC)") 
 
 % East Fram Strait (WSC). This includes the "Middle" of the Fram Strait
 % from Tetal12 Table 3.
+straitParams.type           = 'advective' ;
 straitParams.area           = 3e8 ;         % Strait cross-sectional area [m^2]
 
 straitParams.speed_mean     = (3.8+0.3)*1e6/straitParams.area ;     % Speed average value [m/s]
@@ -47,6 +49,7 @@ straitParams.salinity_Delta = 0.0 ;         % Salinity    change over timeseries
 EastFramStrait = DefineStrait(DataParams,straitParams,"East Fram Strait (WSC)") ;
 
 % BSO
+straitParams.type           = 'advective' ;
 straitParams.area           = 3e8 ;         % Strait cross-sectional area [m^2]
 
 straitParams.speed_mean     = 3.6e6/straitParams.area ;                  % Speed average value [m/s]
@@ -66,6 +69,7 @@ BSO = DefineStrait(DataParams,straitParams,"BSO") ;
 % Davis Strait
 % T_etal12 numbers disagree somewhat with W_etal23 numbers.
 % Tune numbers to resemble W_etal23 and Hetal15 total LFC budget.
+straitParams.type           = 'advective' ;
 straitParams.area           = 2e8 ;         % Strait cross-sectional area [m^2]
 
 straitParams.speed_mean     = -3.1e6/straitParams.area ;                 % Speed average value [m/s]
@@ -83,6 +87,7 @@ straitParams.salinity_Delta = 0.0 ;         % Salinity    change over timeseries
 DavisStrait = DefineStrait(DataParams,straitParams,"Davis Strait") ;
 
 % Bering Strait
+straitParams.type           = 'advective' ;
 straitParams.area           = 3.8e6 ;       % Strait cross-sectional area [m^2]
 
 straitParams.speed_mean     = 1.0e6/straitParams.area ;                 % Speed average value [m/s]
@@ -101,6 +106,7 @@ BeringStrait = DefineStrait(DataParams,straitParams,"Bering Strait") ;
 
 % R+P-E
 % Assumes a mean speed of 0.6m/s and a total flux of 6000km^3/yr from H et al. (2015) Table 1.
+straitParams.type           = 'advective' ;
 straitParams.area           = 3.2e5 ;       % Strait cross-sectional area [m^2]
 
 straitParams.speed_mean     = 0.180e6/straitParams.area ;                % Speed average value [m/s]
