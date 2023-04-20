@@ -138,13 +138,13 @@ end % if
 % fluxes.
 tmp.type       = 'non-advective' ;
 tmp.area       = DataParams.CtrlVolArea ;      % Surface area of control volume [m^2]
-tmp.name       = 'Air/sea heat exchange' ;     % 
-tmp.flux_mean  = 100e12 ;                      % Air/sea heat flux mean value [W]. See H21 and Tetal12.  
+tmp.name       = 'Air/sea heat exchange' ;     %
+tmp.flux_mean  = -100e12 ;                     % Air/sea heat flux mean value [W]. See H21 and Tetal12.
 tmp.flux_std   = 2e12 ;                        % Air/sea heat flux standard deviation [W].
 tmp.flux_Delta = 0e12 ;                        % Air/sea heat flux change over timeseries [W].
 fluxes         = ar1(DataParams.N,DataParams.c,DataParams.phi,tmp.flux_std) ;
 fluxes         = fluxes - mean(fluxes) + tmp.flux_mean + linspace(-tmp.flux_Delta/2,tmp.flux_Delta/2,DataParams.N)' ;
-tmp.fluxes     = fluxes ;
+tmp.heat_flux  = fluxes ;
 components.AirSeaHeatFlux = tmp ;
 
 end
@@ -158,27 +158,27 @@ strait.temperature  = DefineTemperature(DataParams,straitParams) ;
 strait.salinity     = DefineSalinity(DataParams,straitParams) ;
 strait.parameters   = straitParams ;
 strait.density      = ComputeDensity(DataParams,strait) ;
-end
 
-function speeds = DefineSpeed(DataParams,straitParams)
-speeds = ar1(DataParams.N,DataParams.c,DataParams.phi,straitParams.speed_std) ;
-speeds = speeds - mean(speeds) + straitParams.speed_mean + linspace(-straitParams.speed_Delta/2,straitParams.speed_Delta/2,DataParams.N)' ;
-end
+    function speeds = DefineSpeed(DataParams,straitParams)
+        speeds = ar1(DataParams.N,DataParams.c,DataParams.phi,straitParams.speed_std) ;
+        speeds = speeds - mean(speeds) + straitParams.speed_mean + linspace(-straitParams.speed_Delta/2,straitParams.speed_Delta/2,DataParams.N)' ;
+    end
 
-function temps = DefineTemperature(DataParams,straitParams)
-temps = ar1(DataParams.N,DataParams.c,DataParams.phi,straitParams.temp_std) ;
-temps = temps - mean(temps) + straitParams.temp_mean + linspace(-straitParams.temp_Delta/2,straitParams.temp_Delta/2,DataParams.N)' ;
-temps = max(temps,-1.9) ;      % Clip temperatures so they're above freezing.
-end
+    function temps = DefineTemperature(DataParams,straitParams)
+        temps = ar1(DataParams.N,DataParams.c,DataParams.phi,straitParams.temp_std) ;
+        temps = temps - mean(temps) + straitParams.temp_mean + linspace(-straitParams.temp_Delta/2,straitParams.temp_Delta/2,DataParams.N)' ;
+        temps = max(temps,-1.9) ;      % Clip temperatures so they're above freezing.
+    end
 
-function salts = DefineSalinity(DataParams,straitParams)
-salts = ar1(DataParams.N,DataParams.c,DataParams.phi,straitParams.salinity_std) ;
-salts = salts - mean(salts) + straitParams.salinity_mean + linspace(-straitParams.salinity_Delta,straitParams.salinity_Delta/2,DataParams.N)' ;
-salts = max(salts,0.0) ;              % Clip salinities so they're positive
-end
+    function salts = DefineSalinity(DataParams,straitParams)
+        salts = ar1(DataParams.N,DataParams.c,DataParams.phi,straitParams.salinity_std) ;
+        salts = salts - mean(salts) + straitParams.salinity_mean + linspace(-straitParams.salinity_Delta,straitParams.salinity_Delta/2,DataParams.N)' ;
+        salts = max(salts,0.0) ;              % Clip salinities so they're positive
+    end
 
-function out = ComputeDensity(DataParams,strait)
-out = gsw_rho(strait.salinity,strait.temperature,DataParams.p_ref) ;
+    function out = ComputeDensity(DataParams,strait)
+        out = gsw_rho(strait.salinity,strait.temperature,DataParams.p_ref) ;
+    end
 end
 
 function straits = BalanceMass(straits,balance_strait)

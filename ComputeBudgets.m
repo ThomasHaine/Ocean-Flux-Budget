@@ -1,4 +1,4 @@
-function budgets = ComputeBudgets(components,AirSeaHeatFlux,DataParams)
+function budgets = ComputeBudgets(components,DataParams)
 budgets.mass   = accumulateBudget(components,DataParams,"mass_flux") ;
 budgets.salt   = accumulateBudget(components,DataParams,"salt_flux") ;
 budgets.volume = accumulateBudget(components,DataParams,"vol_flux") ;
@@ -6,7 +6,7 @@ budgets.LFC    = accumulateBudget(components,DataParams,"LFC_flux") ;
 budgets.heat   = accumulateBudget(components,DataParams,"heat_flux") ;
 
 % Add air/sea non-advective heat fluxes:
-budgets.heat.AirSeaHeatFlux = AirSeaHeatFlux.fluxes ;
+budgets.heat.AirSeaHeatFlux = components.AirSeaHeatFlux.heat_flux ;
 budgets.heat.total          = budgets.heat.total + budgets.heat.AirSeaHeatFlux ;
 end
 

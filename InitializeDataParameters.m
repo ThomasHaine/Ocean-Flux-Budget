@@ -9,6 +9,7 @@ tmp.C_p             = gsw_cp0 ;                 % Seawater specific heat capacit
 
 % Times are at mid points and of duration time_periods. They're evenly
 % spaced.
+tmp.secs_in_a_yr    = 86400*365.24 ;
 tmp.start_date      = datetime(1990,1,1) ;      % Default start date.
 tmp.end_date        = datetime(2020,1,1) ;      % Default end date.
 timeEdges           = linspace(tmp.start_date,tmp.end_date,tmp.N+1) ;

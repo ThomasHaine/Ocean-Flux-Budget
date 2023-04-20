@@ -4,7 +4,7 @@ tmp.extremaFlag          = 'Off' ;
 tmp.correlationFlag      = 'Off' ;
 tmp.trendFlag            = 'Off' ;
 tmp.FixaxesFlag          = 'Off' ;
-tmp.BudgetcomponentsFlag = 'Off' ;
+tmp.BudgetComponentsFlag = 'Off' ;
 
 % For colors see: https://www.mathworks.com/help/matlab/creating_plots/specify-plot-colors.html
 tmp.WestFramStrait.color = [0.0000 0.4470 0.7410] ;
