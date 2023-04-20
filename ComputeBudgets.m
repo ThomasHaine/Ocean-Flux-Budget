@@ -1,9 +1,13 @@
-function budgets = ComputeBudgets(straits,DataParams)
+function budgets = ComputeBudgets(straits,AirSeaHeatFlux,DataParams)
 budgets.mass   = accumulateBudget(straits,DataParams,"mass_flux") ;
 budgets.salt   = accumulateBudget(straits,DataParams,"salt_flux") ;
 budgets.volume = accumulateBudget(straits,DataParams,"vol_flux") ;
-budgets.heat   = accumulateBudget(straits,DataParams,"heat_flux") ;
 budgets.LFC    = accumulateBudget(straits,DataParams,"LFC_flux") ;
+budgets.heat   = accumulateBudget(straits,DataParams,"heat_flux") ;
+
+% Add air/sea non-advective heat fluxes:
+budgets.heat.AirSeaHeatFlux = AirSeaHeatFlux.fluxes ;
+budgets.heat.total          = budgets.heat.total + budgets.heat.AirSeaHeatFlux ;
 end
 
 %% Local functions
