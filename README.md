@@ -4,4 +4,9 @@ Pedagogical tool to compute ocean fluxes of mass, heat, salt, and freshwater thr
 The sections are based on the Arctic Ocean gateways at Fram, Davis, Bering Straits, and the Barents Sea Opening.
 The tool also computes budgets of mass, heat, salt, and freshwater.
 
+Clone the repo using the `MATLAB->Project->New->From Git` sequence. Or install the standalone executable from `OceanFluxBudget_standalone/for_redistribution/MyAppInstaller_web`.
+
+Theory notes coming soon.
+
+Comments welcome!
 Thomas.Haine@jhu.edu
