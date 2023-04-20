@@ -15,7 +15,6 @@ function components = InitializeComponents(DataParams,FluxParams)
 % West Fram Strait (EGC). This includes sea ice from Tetal12 Table 3.
 % Reduce variability compared to Tetal12 Table 3.
 % Also the mean volume flux from Tetal12 Table 3 (-5.9Sv) seems too big.
-params.type           = 'advective' ;
 params.area           = 3e8 ;         % Strait cross-sectional area [m^2]
 params.speed_mean     = -4.0*1e6/params.area ;       % Speed average value [m/s]
 params.speed_std      = 1.0*1e6/params.area ;       % Speed standard deviation [m/s]
@@ -29,11 +28,10 @@ params.salinity_mean  = 34.0 ;        % Salinity    average value [g/kg]
 params.salinity_std   = 0.15 ;        % Salinity    standard deviation [g/kg]
 params.salinity_Delta = 0.0 ;         % Salinity    change over timeseries [g/kg]
 
-WestFramStrait = DefineStrait(DataParams,params,"West Fram Strait (EGC)") ;
+WestFramStrait = DefineStrait(DataParams,params,'West Fram Strait (EGC)','advective') ;
 
-% East Fram Strait (WSC). This includes the "Middle" of the Fram Strait
+% East Fram Strait (WSC). This includes the 'Middle' of the Fram Strait
 % from Tetal12 Table 3.
-params.type           = 'advective' ;
 params.area           = 3e8 ;         % Strait cross-sectional area [m^2]
 
 params.speed_mean     = (3.8+0.3)*1e6/params.area ;     % Speed average value [m/s]
@@ -48,10 +46,9 @@ params.salinity_mean  = 35.0 ;        % Salinity    average value [g/kg]
 params.salinity_std   = 0.1 ;         % Salinity    standard deviation [g/kg]
 params.salinity_Delta = 0.0 ;         % Salinity    change over timeseries [g/kg]
 
-EastFramStrait = DefineStrait(DataParams,params,"East Fram Strait (WSC)") ;
+EastFramStrait = DefineStrait(DataParams,params,'East Fram Strait (WSC)','advective') ;
 
 % BSO
-params.type           = 'advective' ;
 params.area           = 3e8 ;         % Strait cross-sectional area [m^2]
 
 params.speed_mean     = 3.6e6/params.area ;                  % Speed average value [m/s]
@@ -66,12 +63,11 @@ params.salinity_mean  = 35.05 ;       % Salinity    average value [g/kg]
 params.salinity_std   = 0.05 ;        % Salinity    standard deviation [g/kg]
 params.salinity_Delta = 0.0 ;         % Salinity    change over timeseries [g/kg]
 
-BSO = DefineStrait(DataParams,params,"BSO") ;
+BSO = DefineStrait(DataParams,params,'BSO','advective') ;
 
 % Davis Strait
 % T_etal12 numbers disagree somewhat with W_etal23 numbers.
 % Tune numbers to resemble W_etal23 and Hetal15 total LFC budget.
-params.type           = 'advective' ;
 params.area           = 2e8 ;         % Strait cross-sectional area [m^2]
 
 params.speed_mean     = -3.1e6/params.area ;                 % Speed average value [m/s]
@@ -86,10 +82,9 @@ params.salinity_mean  = 33.8 ;        % Salinity    average value [g/kg]
 params.salinity_std   = 0.2 ;         % Salinity    standard deviation [g/kg]
 params.salinity_Delta = 0.0 ;         % Salinity    change over timeseries [g/kg]
 
-DavisStrait = DefineStrait(DataParams,params,"Davis Strait") ;
+DavisStrait = DefineStrait(DataParams,params,'Davis Strait','advective') ;
 
 % Bering Strait
-params.type           = 'advective' ;
 params.area           = 3.8e6 ;       % Strait cross-sectional area [m^2]
 
 params.speed_mean     = 1.0e6/params.area ;                 % Speed average value [m/s]
@@ -104,11 +99,10 @@ params.salinity_mean  = 32.4 ;        % Salinity    average value [g/kg]
 params.salinity_std   = 0.1 ;         % Salinity    standard deviation [g/kg]
 params.salinity_Delta = 0.0 ;         % Salinity    change over timeseries [g/kg]
 
-BeringStrait = DefineStrait(DataParams,params,"Bering Strait") ;
+BeringStrait = DefineStrait(DataParams,params,'Bering Strait','advective') ;
 
 % R+P-E
 % Assumes a mean speed of 0.6m/s and a total flux of 6000km^3/yr from H et al. (2015) Table 1.
-params.type           = 'advective' ;
 params.area           = 3.2e5 ;       % Strait cross-sectional area [m^2]
 
 params.speed_mean     = 0.180e6/params.area ;                % Speed average value [m/s]
@@ -123,7 +117,7 @@ params.salinity_mean  = 0.0 ;         % Salinity    average value [g/kg]
 params.salinity_std   = 0.1 ;         % Salinity    standard deviation [g/kg]
 params.salinity_Delta = 0.0 ;         % Salinity    change over timeseries [g/kg]
 
-RpPmEStrait = DefineStrait(DataParams,params,"R + P - E") ;
+RpPmEStrait = DefineStrait(DataParams,params,'R + P - E','advective') ;
 
 % Assemble all advective components
 components.WestFramStrait = WestFramStrait ;
@@ -133,7 +127,7 @@ components.DavisStrait    = DavisStrait ;
 components.BeringStrait   = BeringStrait ;
 components.RpPmEStrait    = RpPmEStrait ;
 
-components = UpdateStraits(FluxParams,DataParams,components) ;
+components = UpdateComponents(FluxParams,DataParams,components) ;
 if(strcmp(DataParams.massBalance,'On'))
     components = BalanceMass(components,'EastFramStrait') ;           % Hard code balance adjustment to WSC.
 end % if
@@ -144,7 +138,7 @@ end % if
 % fluxes.
 tmp.type       = 'non-advective' ;
 tmp.area       = DataParams.CtrlVolArea ;      % Surface area of control volume [m^2]
-tmp.name       = "Air/sea heat exchange" ;     % 
+tmp.name       = 'Air/sea heat exchange' ;     % 
 tmp.flux_mean  = 100e12 ;                      % Air/sea heat flux mean value [W]. See H21 and Tetal12.  
 tmp.flux_std   = 2e12 ;                        % Air/sea heat flux standard deviation [W].
 tmp.flux_Delta = 0e12 ;                        % Air/sea heat flux change over timeseries [W].
@@ -156,6 +150,37 @@ components.AirSeaHeatFlux = tmp ;
 end
 
 %% Local functions.
+function strait = DefineStrait(DataParams,straitParams,name,type)
+strait.type         = type ;
+strait.name         = name ;
+strait.normal_speed = DefineSpeed(DataParams,straitParams) ;
+strait.temperature  = DefineTemperature(DataParams,straitParams) ;
+strait.salinity     = DefineSalinity(DataParams,straitParams) ;
+strait.parameters   = straitParams ;
+strait.density      = ComputeDensity(DataParams,strait) ;
+end
+
+function speeds = DefineSpeed(DataParams,straitParams)
+speeds = ar1(DataParams.N,DataParams.c,DataParams.phi,straitParams.speed_std) ;
+speeds = speeds - mean(speeds) + straitParams.speed_mean + linspace(-straitParams.speed_Delta/2,straitParams.speed_Delta/2,DataParams.N)' ;
+end
+
+function temps = DefineTemperature(DataParams,straitParams)
+temps = ar1(DataParams.N,DataParams.c,DataParams.phi,straitParams.temp_std) ;
+temps = temps - mean(temps) + straitParams.temp_mean + linspace(-straitParams.temp_Delta/2,straitParams.temp_Delta/2,DataParams.N)' ;
+temps = max(temps,-1.9) ;      % Clip temperatures so they're above freezing.
+end
+
+function salts = DefineSalinity(DataParams,straitParams)
+salts = ar1(DataParams.N,DataParams.c,DataParams.phi,straitParams.salinity_std) ;
+salts = salts - mean(salts) + straitParams.salinity_mean + linspace(-straitParams.salinity_Delta,straitParams.salinity_Delta/2,DataParams.N)' ;
+salts = max(salts,0.0) ;              % Clip salinities so they're positive
+end
+
+function out = ComputeDensity(DataParams,strait)
+out = gsw_rho(strait.salinity,strait.temperature,DataParams.p_ref) ;
+end
+
 function straits = BalanceMass(straits,balance_strait)
 massConverg = ComputeMassConverg(straits) ;
 straits.(balance_strait).normal_speed = straits.(balance_strait).normal_speed - massConverg ./ (straits.(balance_strait).density .* straits.(balance_strait).parameters.area) ;

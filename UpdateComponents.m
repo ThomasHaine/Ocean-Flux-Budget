@@ -1,18 +1,20 @@
-function straits = UpdateStraits(FluxParams,DataParams,straits)
-straitNames = fieldnames(straits) ;
-for ss = 1:numel(straitNames)
-    strait = straitNames{ss} ;
-    [vol_flux,mass_flux,salt_flux,heat_flux,LFC_flux] = ComputeFluxes(straits.(strait),FluxParams,DataParams) ;
-    straits.(strait).vol_flux  =  vol_flux ;
-    straits.(strait).mass_flux = mass_flux ;
-    straits.(strait).salt_flux = salt_flux ;
-    straits.(strait).heat_flux = heat_flux ;
-    straits.(strait).LFC_flux  =  LFC_flux ;
+function components = UpdateComponents(FluxParams,DataParams,components)
+componentNames = fieldnames(components) ;
+for ss = 1:numel(componentNames)
+    if(strcmp(components.(componentNames{ss}).type,'advective'))     % Only update advective components.
+        strait = componentNames{ss} ;
+        [vol_flux,mass_flux,salt_flux,heat_flux,LFC_flux] = ComputeFluxes(components.(strait),FluxParams,DataParams) ;
+        components.(strait).vol_flux  =  vol_flux ;
+        components.(strait).mass_flux = mass_flux ;
+        components.(strait).salt_flux = salt_flux ;
+        components.(strait).heat_flux = heat_flux ;
+        components.(strait).LFC_flux  =  LFC_flux ;
 
-    [salt_flux_correl,heat_flux_correl,LFC_flux_correl] = ComputeCorrelations(straits.(strait)) ;
-    straits.(strait).salt_flux_correl = salt_flux_correl ;
-    straits.(strait).heat_flux_correl = heat_flux_correl ;
-    straits.(strait).LFC_flux_correl  =  LFC_flux_correl ;
+        [salt_flux_correl,heat_flux_correl,LFC_flux_correl] = ComputeCorrelations(components.(strait)) ;
+        components.(strait).salt_flux_correl = salt_flux_correl ;
+        components.(strait).heat_flux_correl = heat_flux_correl ;
+        components.(strait).LFC_flux_correl  =  LFC_flux_correl ;
+    end % if
 end % ss
 end
 
