@@ -1,0 +1,85 @@
+\begin{thebibliography}{9}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Bacon et~al.(2015)Bacon, Aksenov, Fawcett, and Madec]{bacon_etal15}
+Sheldon Bacon, Yevgeny Aksenov, Stephen Fawcett, and Gurvan Madec.
+\newblock Arctic mass, freshwater and heat fluxes: methods and modelled
+  seasonal variability.
+\newblock \emph{Phil.~Trans.~R.~Soc.~Lond.~A}, 373\penalty0 (2052):\penalty0
+  20140169, October 2015.
+\newblock \doi{10.1098/rsta.2014.0169}.
+
+\bibitem[IOC et~al.(2010)IOC, SCOR, and IAPSO]{ioc10}
+IOC, SCOR, and IAPSO.
+\newblock The international thermodynamic equation of seawater -- 2010:
+  Calculation and use of thermodynamic properties.
+\newblock Technical report, Intergovernmental Oceanographic Commission, Manuals
+  and Guides No. 56, UNESCO (English), 2010.
+\newblock 196pp.
+
+\bibitem[Klinger and Haine(2019)]{klinger&haine19}
+B.~A. Klinger and T.~W.~N. Haine.
+\newblock \emph{{Ocean Circulation in Three Dimensions}}.
+\newblock Cambridge University Press, Cambridge, United Kingdom and New York,
+  NY, USA, 1st edition, 2019.
+\newblock ISBN 978-0-521-76843-6.
+\newblock URL \url{http://www.cambridge.org/9780521768436}.
+
+\bibitem[McDonagh and {the TICTOC Consortium}(2022)]{mcdonagh_etal}
+Elaine McDonagh and {the TICTOC Consortium}.
+\newblock Causes of regional ocean temperature change.
+\newblock \emph{J.~Advances Model.~Earth Sys.}, 2022.
+\newblock URL \url{https://www.overleaf.com/project/629f8b851f4f5a6ac2454390}.
+\newblock In prep.
+
+\bibitem[McDougall(2003)]{mcdougall03}
+Trevor~J. McDougall.
+\newblock Potential enthalpy: A conservative oceanic variable for evaluating
+  heat content and heat fluxes.
+\newblock \emph{J.~Phys.~Oceanogr.}, 33\penalty0 (5):\penalty0 945--963, May
+  2003.
+\newblock \doi{10.1175/1520-0485(2003)033<0945:peacov>2.0.co;2}.
+
+\bibitem[Piecuch et~al.(2017)Piecuch, Ponte, Little, Buckley, and
+  Fukumori]{piecuch_etal17}
+Christopher~G. Piecuch, Rui~M. Ponte, Christopher~M. Little, Martha~W. Buckley,
+  and Ichiro Fukumori.
+\newblock Mechanisms underlying recent decadal changes in subpolar {North
+  Atlantic Ocean} heat content.
+\newblock \emph{J.~Geophys.~Res.}, 122\penalty0 (9):\penalty0 7181--7197,
+  September 2017.
+\newblock \doi{10.1002/2017jc012845}.
+
+\bibitem[Schauer and Beszczynska-Möller(2009)]{schauer&besczcynska-moller09}
+U.~Schauer and A.~Beszczynska-Möller.
+\newblock Problems with estimation and interpretation of oceanic heat transport
+  {\textendash} conceptual remarks for the case of fram strait in the arctic
+  ocean.
+\newblock \emph{Ocean Sci.}, 5\penalty0 (4):\penalty0 487--494, 2009.
+\newblock \doi{10.5194/os-5-487-2009}.
+
+\bibitem[Schauer and Losch(2019)]{schauer&losch19}
+Ursula Schauer and Martin Losch.
+\newblock {``Freshwater''} in the ocean is not a useful parameter in climate
+  research.
+\newblock \emph{J.~Phys.~Oceanogr.}, 49\penalty0 (9):\penalty0 2309--2321,
+  2019.
+\newblock \doi{10.1175/jpo-d-19-0102.1}.
+
+\bibitem[Tsubouchi et~al.(2012)Tsubouchi, Bacon, Garabato, Aksenov, Laxon,
+  Fahrbach, Beszczynska-M\"{o}ller, Hansen, Lee, and
+  Ingvaldsen]{tsubouchi_etal12}
+T.~Tsubouchi, S.~Bacon, A.~C.~Naveira Garabato, Y.~Aksenov, S.~W. Laxon,
+  E.~Fahrbach, A.~Beszczynska-M\"{o}ller, E.~Hansen, C.~M. Lee, and R.~B.
+  Ingvaldsen.
+\newblock The {Arctic Ocean} in summer: A quasi-synoptic inverse estimate of
+  boundary fluxes and water mass transformation.
+\newblock \emph{J.~Geophys.~Res.}, 117\penalty0 (C1):\penalty0 C01024, January
+  2012.
+\newblock \doi{10.1029/2011JC007174}.
+
+\end{thebibliography}
