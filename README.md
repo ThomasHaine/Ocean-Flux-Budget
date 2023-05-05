@@ -1,3 +1,5 @@
+[![License:MIT](https://img.shields.io/badge/License-MIT-lightgray.svg?style=flt-square)](https://opensource.org/licenses/MIT)
+
 # Ocean-Flux-Budget
 
 Pedagogical tool to compute ocean fluxes of mass, heat, salt, and freshwater through a sequence of hypothetical hydrographic sections. 
