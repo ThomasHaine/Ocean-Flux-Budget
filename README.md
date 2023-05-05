@@ -2,7 +2,9 @@
 
 Pedagogical tool to compute ocean fluxes of mass, heat, salt, and freshwater through a sequence of hypothetical hydrographic sections. 
 The sections are based on the Arctic Ocean gateways at Fram, Davis, Bering Straits, and the Barents Sea Opening.
-The tool also computes budgets of mass, heat, salt, and freshwater.
+The tool also computes budgets of mass, heat, salt, and freshwater. 
+
+The idea is to interactively explore the pitfalls of heat and freshwater fluxes relative to a reference temperature and reference salinity.
 
 Clone the repo using the `MATLAB->Project->New->From Git` sequence. 
 
