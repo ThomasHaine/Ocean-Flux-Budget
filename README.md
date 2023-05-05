@@ -8,7 +8,9 @@ Clone the repo using the `MATLAB->Project->New->From Git` sequence.
 
 Or install the standalone MacOs executable from `OceanFluxBudget_standalone/for_redistribution/MyAppInstaller_web`.
 
-Theory notes coming soon.
+If you want a standalone executable for a different operating system (Linux, Windows), raise an issue.
 
-Comments welcome!  (Raise an issue.)
+Theory notes are in the `WriteUp/budgets_theory.pdf` document. This includes suggestions for best practices!
+
+Comments welcome!  (raise an issue, send email)
 Thomas.Haine@jhu.edu
