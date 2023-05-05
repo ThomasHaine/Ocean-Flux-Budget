@@ -12,7 +12,7 @@ Or install the standalone MacOs executable from `OceanFluxBudget_standalone/for_
 
 If you want a standalone executable for a different operating system (Linux, Windows), raise an issue.
 
-Watch the (YouTube tutorial video)[https://youtu.be/8CKWIFp6XQQ].
+Watch the [YouTube tutorial video](https://youtu.be/8CKWIFp6XQQ).
 
 Theory notes are in the `WriteUp/budgets_theory.pdf` document. This includes suggestions for best practices!
 
