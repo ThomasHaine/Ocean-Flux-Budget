@@ -12,5 +12,5 @@ If you want a standalone executable for a different operating system (Linux, Win
 
 Theory notes are in the `WriteUp/budgets_theory.pdf` document. This includes suggestions for best practices!
 
-Comments welcome!  (raise an issue, send email)
+Comments welcome (raise an issue, send email)
 Thomas.Haine@jhu.edu
