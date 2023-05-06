@@ -17,6 +17,8 @@ If you want a standalone executable for a different operating system (Linux, Win
 
 Watch the [YouTube tutorial video](https://youtu.be/8CKWIFp6XQQ).
 
+See the poster from the 2023 ASOF Workshop at `Poster/OceanFluxBudget poster.pdf`.
+
 Theory notes are in the `WriteUp/budgets_theory.pdf` document. This includes suggestions for best practices!
 
 Comments welcome (raise an issue, send email)
