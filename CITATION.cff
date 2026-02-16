@@ -19,7 +19,7 @@ identifiers:
     value: 'https://www.youtube.com/watch?v=8CKWIFp6XQQ'
     description: YouTube video
 repository-code: 'https://github.com/ThomasHaine/Ocean-Flux-Budget'
-url: 'https://github.com/hainegroup'
+url: 'https://github.com/ThomasHaine'
 abstract: Pedagogical tool and documentation for ocean fluxes
 keywords:
   - ocean flux
